@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 cd /d "%~dp0"
-title Mebel360 - 2D-PLACE
+title Mebel360 Hisobchi Server
 
 echo Mebel360 - 2D-PLACE bog'langan dastur ishga tushmoqda...
 
@@ -27,5 +27,5 @@ if errorlevel 1 (
   )
 )
 
-%PY% bridge_app.py
+%PY% server_app.py
 pause

@@ -1403,9 +1403,14 @@
         <i></i>
         <div><b id="m360SplashDate">—</b><span id="m360SplashDay">—</span></div>
       </div>
-      <button class="m360-splash-enter" type="button" onclick="m360EnterApp()">Kirish <span>→</span></button>
+      <div class="m360-login-fields">
+        <input id="m360LoginUser" type="text" autocomplete="username" placeholder="Foydalanuvchi nomi" value="admin">
+        <input id="m360LoginPass" type="password" autocomplete="current-password" placeholder="Parol">
+        <small id="m360LoginError"></small>
+      </div>
+      <button class="m360-splash-enter" type="button" onclick="m360SecureEnter()">Kirish <span>→</span></button>
       <div class="m360-splash-or">yoki</div>
-      <button class="m360-splash-demo" type="button" onclick="m360EnterApp()">▦ &nbsp; Hisobchi rejimida ochish</button>
+      <button class="m360-splash-demo" type="button" onclick="m360EnterApp()">▦ &nbsp; Offline hisobchi rejimida ochish</button>
     </section>
     <div class="m360-splash-secure">♢ <span><b>Xavfsiz ulanish</b><small>Mebel360 Hisobchi · Versiya 1.0</small></span></div>
   </main>
@@ -1438,6 +1443,7 @@
       <button type="button" class="header-link" onclick="window.location.href='/studio-3d'"><span>◈</span>Studio 3D</button>
       <button type="button" class="header-link" onclick="document.getElementById('previewArea')?.scrollIntoView()"><span>↶</span>Natijalar</button>
       <button type="button" class="header-link ai-header-link" onclick="openMebelAI()"><span>✦</span>AI yordamchi</button>
+      <button type="button" class="header-link" onclick="openM360ServerPanel()"><span>☁</span>Server / ERP</button>
       <div class="lang-switch" aria-label="Til tanlash">
         <button type="button" class="lang-btn active" data-lang="uz" onclick="setM360Language('uz')">UZ</button>
         <button type="button" class="lang-btn" data-lang="ru" onclick="setM360Language('ru')">RU</button>
@@ -1925,6 +1931,12 @@
               <div><label>Yetkazish/o‘rnatish — 1-dona</label><input id="delivery" type="number" value="300000"></div>
               <div><label>Keyingi donalar yetkazish, %</label><input id="repeatDeliveryPercent" type="number" value="20" min="0" max="100"></div>
               <div><label>Foyda, %</label><input id="profit" type="number" value="25"></div>
+              <div class="m360-cbu-box full">
+                <div><b>Markaziy bank kursi</b><small id="m360CbuStatus">USD kursi yuklanmagan</small></div>
+                <select id="m360ForeignCcy"><option>USD</option><option>EUR</option><option>RUB</option><option>CNY</option></select>
+                <input id="m360ForeignUnitPrice" type="number" step="0.01" placeholder="1 list narxi, masalan 40">
+                <button type="button" onclick="m360ApplyCbuBoardPrice()">Kurs bilan LMDF narxiga qo‘llash</button>
+              </div>
               <div class="setting-note">Bir xil mahsulot ko‘payganda birinchi dona xizmat haqi to‘liq olinadi. Keyingi donalar takroriy ish bo‘lgani uchun yuqoridagi foizda arzonroq hisoblanadi.</div>
             </div>
           </div>
@@ -7801,6 +7813,10 @@ body.mebel360-app.m360-clean-white .ai-fab{background:linear-gradient(135deg,var
 .m360-splash-logo{position:relative;z-index:2;width:min(650px,70vw);margin-bottom:12px}.m360-splash-logo img{display:block;width:100%;height:auto;filter:drop-shadow(0 13px 18px rgba(7,28,66,.07))}
 .m360-splash-card{position:relative;z-index:2;width:min(620px,76vw);padding:28px 38px 30px;border:1px solid rgba(7,28,66,.08);border-radius:20px;background:rgba(255,255,255,.94);box-shadow:0 22px 55px rgba(7,28,66,.10);text-align:center}.m360-splash-card h1{margin:0;color:var(--m360-navy);font-size:38px;letter-spacing:-.04em}.m360-splash-card>p{margin:8px 0 20px;color:#61738b;font-size:15px;line-height:1.48}.m360-splash-time-row{display:grid;grid-template-columns:48px auto 1px auto;gap:15px;align-items:center;justify-content:center;margin:4px auto 22px}.m360-splash-clock-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#eaf7ff;color:#0b8fc8;font-size:23px}.m360-splash-time-row>strong{font-size:38px;letter-spacing:.01em;color:var(--m360-navy)}.m360-splash-time-row>i{display:block;width:1px;height:45px;background:#dfe6ee}.m360-splash-time-row>div:last-child{text-align:left}.m360-splash-time-row b,.m360-splash-time-row span{display:block}.m360-splash-time-row b{font-size:13px;color:#213a5a}.m360-splash-time-row span{margin-top:3px;color:#0b8fc8;font-size:13px;font-weight:800}.m360-splash-enter{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--m360-orange),var(--m360-orange2));color:#fff;font-size:16px;font-weight:900;box-shadow:0 12px 28px rgba(255,107,0,.18)}.m360-splash-enter span{margin-left:auto;display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(255,255,255,.7);border-radius:50%;font-size:15px}.m360-splash-or{display:flex;align-items:center;gap:10px;margin:18px 0 10px;color:#9aa8ba;font-size:12px}.m360-splash-or:before,.m360-splash-or:after{content:"";flex:1;height:1px;background:#e4eaf1}.m360-splash-demo{border:0;background:transparent;color:#0b8fc8;font-size:13px;font-weight:900;box-shadow:none}.m360-splash-secure{position:absolute;right:30px;bottom:22px;display:flex;align-items:center;gap:10px;color:#173a63;font-size:20px}.m360-splash-secure span{display:flex;flex-direction:column}.m360-splash-secure b{font-size:12px}.m360-splash-secure small{margin-top:3px;color:#8796a8;font-size:10px}
 @media(max-width:1100px){body.mebel360-app.m360-clean-white{padding-left:0!important}.app-rail{display:none!important}.m360-brand-splash{grid-template-columns:1fr}.m360-splash-side{display:none}.m360-splash-logo{width:min(620px,86vw)}.m360-splash-card{width:min(620px,90vw)}}
+
+.m360-login-fields{display:grid;gap:9px;margin:0 0 12px}.m360-login-fields input{width:100%;min-height:48px;padding:0 14px;border:1px solid #d9e3ef;border-radius:10px;background:#fbfdff;color:#0b1b36;font-size:14px;outline:none}.m360-login-fields input:focus{border-color:#11a7d8;box-shadow:0 0 0 3px rgba(17,167,216,.10)}.m360-login-fields small{min-height:16px;color:#c62828;font-size:11px;font-weight:800;text-align:left}
+.m360-cbu-box{display:grid!important;grid-template-columns:1.1fr 90px 1fr 1.25fr!important;gap:8px;align-items:end;padding:12px;border:1px solid rgba(17,167,216,.25);border-radius:14px;background:linear-gradient(135deg,#f6fbff,#fff8f2)}.m360-cbu-box div{display:flex;flex-direction:column;gap:3px}.m360-cbu-box small{color:#6b7f95}.m360-cbu-box button{min-height:44px;border:0;border-radius:10px;background:linear-gradient(135deg,#0b8fc8,#ff6b00);color:#fff;font-weight:900;padding:0 12px}
+.m360-server-modal{position:fixed;inset:0;z-index:100100;display:none;place-items:center;padding:20px;background:rgba(4,16,38,.58);backdrop-filter:blur(7px)}.m360-server-modal.open{display:grid}.m360-server-card{width:min(760px,96vw);max-height:90vh;overflow:auto;border-radius:22px;background:#fff;box-shadow:0 30px 90px rgba(0,0,0,.28);border:1px solid #dbe7f2}.m360-server-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid #e8eef5;background:linear-gradient(135deg,#061936,#0b3d78);color:#fff}.m360-server-head h2{margin:0;font-size:20px}.m360-server-head button{border:0;background:rgba(255,255,255,.12);color:#fff;border-radius:10px;padding:8px 12px}.m360-server-body{padding:18px;display:grid;gap:12px}.m360-server-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.m360-server-stat{padding:12px;border:1px solid #dbe7f2;border-radius:14px;background:#f8fbff}.m360-server-stat span{display:block;color:#718399;font-size:11px}.m360-server-stat b{display:block;margin-top:5px;color:#102b5d;font-size:15px}.m360-server-actions{display:flex;flex-wrap:wrap;gap:8px}.m360-server-actions button,.m360-server-actions a{border:0;border-radius:10px;padding:10px 13px;background:#102b5d;color:#fff;font-weight:800;text-decoration:none}.m360-server-actions button.orange{background:#ff6b00}.m360-server-msg{padding:10px 12px;border-radius:12px;background:#eef8ff;color:#194c72;font-size:12px}.m360-wh-form{display:grid;grid-template-columns:1fr 1.3fr 90px 90px;gap:8px}.m360-wh-form input{min-height:42px;padding:0 10px;border:1px solid #dbe7f2;border-radius:9px}.m360-wh-list{display:grid;gap:7px}.m360-wh-item{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px 11px;border:1px solid #e1e9f2;border-radius:10px}.m360-wh-item small{color:#74869a}.m360-wh-item b{color:#0b8fc8}@media(max-width:700px){.m360-cbu-box{grid-template-columns:1fr!important}.m360-server-grid{grid-template-columns:1fr}.m360-wh-form{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){body.mebel360-app.m360-clean-white .wrap{padding:0 10px 22px!important}.m360-brand-splash{overflow:auto}.m360-splash-main{min-height:100vh;padding:72px 14px 30px;justify-content:flex-start}.m360-splash-logo{width:96vw;margin-top:10px}.m360-splash-card{width:96vw;padding:24px 18px}.m360-splash-card h1{font-size:31px}.m360-splash-time-row{grid-template-columns:40px auto;gap:9px}.m360-splash-time-row>i,.m360-splash-time-row>div:last-child{display:none}.m360-splash-time-row>strong{font-size:31px}.m360-splash-secure{position:static;margin-top:20px}}
 </style>
 <script id="m360-brand-start-script">
@@ -7826,6 +7842,60 @@ body.mebel360-app.m360-clean-white .ai-fab{background:linear-gradient(135deg,var
 })();
 </script>
 
+
+<div class="m360-server-modal" id="m360ServerModal" aria-hidden="true">
+  <section class="m360-server-card">
+    <div class="m360-server-head"><h2>☁ Mebel360 Hisobchi — Server / ERP</h2><button type="button" onclick="closeM360ServerPanel()">Yopish ✕</button></div>
+    <div class="m360-server-body">
+      <div class="m360-server-grid">
+        <div class="m360-server-stat"><span>Foydalanuvchi</span><b id="m360SrvUser">—</b></div>
+        <div class="m360-server-stat"><span>Server bazasi</span><b id="m360SrvDb">Tekshirilmoqda…</b></div>
+        <div class="m360-server-stat"><span>USD kursi</span><b id="m360SrvCbu">—</b></div>
+        <div class="m360-server-stat"><span>Mebel360 ERP</span><b id="m360SrvErp">—</b></div>
+      </div>
+      <div class="m360-server-actions">
+        <button class="orange" type="button" onclick="m360SyncNow()">↻ Hozir sinxronlash</button>
+        <a href="/api/backup/export" target="_blank">⬇ Server backup JSON</a>
+        <button type="button" onclick="m360RetryErp()">↻ ERP navbatini qayta yuborish</button>
+        <button type="button" onclick="m360ChangePassword()">🔐 Parolni almashtirish</button>
+        <button type="button" onclick="m360Logout()">Chiqish</button>
+      </div>
+      <div class="m360-server-msg" id="m360SrvMsg">Loyihalar, material katalogi, furnitura, qoldiq va ishlab chiqarish navbati serverga avtomatik zaxiralanadi.</div>
+      <h3 style="margin:8px 0 0;color:#102b5d">Ombor</h3>
+      <div class="m360-wh-form"><input id="m360WhSku" placeholder="SKU, masalan MDF-OQ-18"><input id="m360WhName" placeholder="Nomi, masalan MDF Oq 18mm"><input id="m360WhQty" type="number" step="0.01" placeholder="Soni"><button type="button" onclick="m360WarehouseSave()">Saqlash</button></div>
+      <div class="m360-wh-list" id="m360WhList"></div>
+    </div>
+  </section>
+</div>
+<script id="m360-server-integration-v2">
+(function(){
+  const STATE_KEYS=['m360_materials_v1','m360_hardware_v1','m360_offcuts_v1','m360_production_queue_v1'];
+  let authenticated=false, currentUser=null, syncTimer=null;
+  const qs=id=>document.getElementById(id);
+  function jget(key,fb=[]){try{const v=JSON.parse(localStorage.getItem(key));return Array.isArray(v)?v:fb}catch(_e){return fb}}
+  function jset(key,v){try{localStorage.setItem(key,JSON.stringify(v))}catch(_e){}}
+  function mergeRows(a,b,key='id'){const out=[...(Array.isArray(a)?a:[])];(Array.isArray(b)?b:[]).forEach(x=>{const k=x?.[key]||x?.code||x?.meta?.code;if(!k){out.push(x);return}const i=out.findIndex(y=>(y?.[key]||y?.code||y?.meta?.code)===k);if(i<0)out.push(x);else{const ad=new Date(out[i]?.updatedAt||out[i]?.savedAt||0).getTime(),bd=new Date(x?.updatedAt||x?.serverUpdatedAt||x?.savedAt||0).getTime();if(bd>=ad)out[i]=x;}});return out}
+  async function api(url,opt={}){const r=await fetch(url,{credentials:'same-origin',...opt,headers:{'Content-Type':'application/json',...(opt.headers||{})}});let d={};try{d=await r.json()}catch(_e){}if(!r.ok)throw new Error(d.error||('HTTP '+r.status));return d}
+  async function me(){try{const d=await api('/api/auth/me',{method:'GET'});authenticated=true;currentUser=d.user;return d.user}catch(_e){authenticated=false;currentUser=null;return null}}
+  window.m360SecureEnter=async function(){const err=qs('m360LoginError');if(err)err.textContent='';const existing=await me();if(existing){window.m360EnterApp();await syncFromServer();return}const username=(qs('m360LoginUser')?.value||'').trim(),password=qs('m360LoginPass')?.value||'';if(!username||!password){if(err)err.textContent='Login va parolni kiriting.';return}try{const d=await api('/api/auth/login',{method:'POST',body:JSON.stringify({username,password})});authenticated=true;currentUser=d.user;window.m360EnterApp();if(d.default_password)alert('⚠️ Hozir standart parol ishlatyapsiz. Server / ERP bo‘limidan parolni almashtiring.');await syncFromServer();startAutoSync();}catch(e){if(err)err.textContent=e.message||'Kirishda xato';}};
+  async function syncFromServer(){if(!authenticated)return;try{const p=await api('/api/projects');const local=jget('m360_projects_v2',[]);const merged=mergeRows(local,p.projects||[],'code');jset('m360_projects_v2',merged);for(const key of STATE_KEYS){const d=await api('/api/state/'+encodeURIComponent(key));const m=mergeRows(jget(key,[]),d.value||[],'id');jset(key,m);await api('/api/state/'+encodeURIComponent(key),{method:'POST',body:JSON.stringify({value:m})});}if(window.renderM360Projects)window.renderM360Projects();return true}catch(e){console.warn('M360 sync',e);return false}}
+  async function syncLocalToServer(){if(!authenticated)return;const projects=jget('m360_projects_v2',[]);for(const p of projects.slice(0,250)){try{await api('/api/projects',{method:'POST',body:JSON.stringify(p)})}catch(e){console.warn('project sync',p?.code,e)}}for(const key of STATE_KEYS){try{await api('/api/state/'+encodeURIComponent(key),{method:'POST',body:JSON.stringify({value:jget(key,[])})})}catch(e){console.warn('state sync',key,e)}}}
+  window.m360SyncNow=async function(){const msg=qs('m360SrvMsg');if(msg)msg.textContent='Sinxronlanmoqda…';try{await syncLocalToServer();await syncFromServer();if(msg)msg.textContent='✅ Server bilan sinxronlandi.';await refreshServerPanel()}catch(e){if(msg)msg.textContent='❌ '+e.message}}
+  function startAutoSync(){clearInterval(syncTimer);syncTimer=setInterval(()=>syncLocalToServer().catch(()=>{}),30000)}
+  function wrapProjectFunctions(){const oldSave=window.saveCurrentProject;if(oldSave&&!oldSave.__serverWrapped){const f=function(){const rec=oldSave.apply(this,arguments);if(authenticated)api('/api/projects',{method:'POST',body:JSON.stringify(rec)}).then(d=>{if(d.warnings?.length)console.warn('Mebel360 validation',d.warnings)}).catch(e=>console.warn('Server save',e));return rec};f.__serverWrapped=true;window.saveCurrentProject=f}const oldDelete=window.deleteSavedM360Project;if(oldDelete&&!oldDelete.__serverWrapped){const f=function(code){const before=jget('m360_projects_v2',[]).some(x=>x.code===code);const out=oldDelete.apply(this,arguments);if(before&&authenticated)api('/api/projects/'+encodeURIComponent(code),{method:'DELETE'}).catch(()=>{});return out};f.__serverWrapped=true;window.deleteSavedM360Project=f}const oldQueue=window.queueCurrentM360Project;if(oldQueue&&!oldQueue.__serverWrapped){const f=function(){const out=oldQueue.apply(this,arguments);const projects=jget('m360_projects_v2',[]);const p=projects[0];if(p&&authenticated)api('/api/erp/projects',{method:'POST',body:JSON.stringify(p)}).then(d=>{const m=d.queued?'🟡 ERP sozlanmagani/aloqa bo‘lmagani uchun navbatga saqlandi.':'✅ ERP ga yuborildi.';window.alert?.(m)}).catch(e=>window.alert?.('ERP: '+e.message));return out};f.__serverWrapped=true;window.queueCurrentM360Project=f}}
+  async function refreshServerPanel(){const user=await me();if(qs('m360SrvUser'))qs('m360SrvUser').textContent=user?`${user.username} · ${user.role}`:'Kirilmagan';try{const h=await fetch('/api/health').then(r=>r.json());qs('m360SrvDb').textContent=h.ok?'Ulangan':'Xato'}catch(_e){qs('m360SrvDb').textContent='Offline'}try{const c=await fetch('/api/cbu/rates?ccy=USD').then(r=>r.json());qs('m360SrvCbu').textContent=c.ok?`${Number(c.rate).toLocaleString('ru-RU')} so‘m · ${c.date}`:'Kurs yo‘q'}catch(_e){qs('m360SrvCbu').textContent='Kurs yo‘q'}if(user){try{const e=await api('/api/erp/status');qs('m360SrvErp').textContent=e.configured?`Ulangan · navbat ${e.queued}`:`Sozlanmagan · navbat ${e.queued}`}catch(_e){qs('m360SrvErp').textContent='Tekshirib bo‘lmadi'}await refreshWarehouse()}else qs('m360SrvErp').textContent='Avval kiring'}
+  window.openM360ServerPanel=async function(){qs('m360ServerModal')?.classList.add('open');await refreshServerPanel()};window.closeM360ServerPanel=function(){qs('m360ServerModal')?.classList.remove('open')};
+  window.m360RetryErp=async function(){try{const d=await api('/api/erp/retry',{method:'POST',body:'{}'});qs('m360SrvMsg').textContent=`ERP qayta yuborildi: ${d.sent} ta, xato: ${d.failed} ta`;await refreshServerPanel()}catch(e){qs('m360SrvMsg').textContent='❌ '+e.message}}
+  window.m360Logout=async function(){try{await api('/api/auth/logout',{method:'POST',body:'{}'})}catch(_e){}authenticated=false;currentUser=null;location.reload()};
+  window.m360ChangePassword=async function(){const old=prompt('Eski parol:'),nw=prompt('Yangi parol (kamida 8 belgi):');if(!old||!nw)return;try{await api('/api/auth/change-password',{method:'POST',body:JSON.stringify({old_password:old,new_password:nw})});alert('✅ Parol almashtirildi.')}catch(e){alert('❌ '+e.message)}};
+  window.m360ApplyCbuBoardPrice=async function(){const ccy=qs('m360ForeignCcy')?.value||'USD',price=Number(qs('m360ForeignUnitPrice')?.value||0);if(price<=0){alert('1 list narxini kiriting.');return}try{const d=await fetch('/api/cbu/convert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ccy,unit_price:price,qty:1})}).then(r=>r.json());if(!d.ok)throw new Error(d.error||'Kurs xatosi');const el=qs('boardPrice');if(el){el.value=Math.round(d.unit_price_uzs);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}))}if(qs('m360CbuStatus'))qs('m360CbuStatus').textContent=`1 ${ccy} = ${Number(d.rate).toLocaleString('ru-RU')} so‘m · ${d.rate_date}`;if(typeof calculate==='function')calculate();}catch(e){alert('❌ '+e.message)}};
+  async function refreshWarehouse(){const box=qs('m360WhList');if(!box||!authenticated)return;try{const d=await api('/api/warehouse/items');box.innerHTML=(d.items||[]).slice(0,20).map(x=>`<div class="m360-wh-item"><span><b>${x.name}</b><br><small>${x.sku} · ${x.color||''} ${x.thickness||''}</small></span><b>${Number(x.available_qty).toLocaleString('ru-RU')} ${x.unit}</b></div>`).join('')||'<small>Omborda hali material yo‘q.</small>'}catch(e){box.textContent=e.message}}
+  window.m360WarehouseSave=async function(){const sku=(qs('m360WhSku')?.value||'').trim(),name=(qs('m360WhName')?.value||'').trim(),qty=Number(qs('m360WhQty')?.value||0);if(!sku||!name){alert('SKU va nomni kiriting.');return}try{await api('/api/warehouse/items',{method:'POST',body:JSON.stringify({sku,name,qty,unit:'list'})});await refreshWarehouse();qs('m360WhQty').value='';}catch(e){alert('❌ '+e.message)}};
+  document.addEventListener('DOMContentLoaded',async()=>{wrapProjectFunctions();const u=await me();if(u){authenticated=true;currentUser=u;await syncFromServer();startAutoSync()}try{const c=await fetch('/api/cbu/rates?ccy=USD').then(r=>r.json());if(c.ok&&qs('m360CbuStatus'))qs('m360CbuStatus').textContent=`1 USD = ${Number(c.rate).toLocaleString('ru-RU')} so‘m · ${c.date}`}catch(_e){}});
+  // Some original functions are registered later in the page; wrap once more after full load.
+  window.addEventListener('load',()=>{wrapProjectFunctions();});
+})();
+</script>
 <script id="m360-clean-white-script">
 (function(){
   function initClean(){
