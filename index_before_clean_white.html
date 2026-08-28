@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mebel360 Hisobchi — mebel o‘lchami va material hisoblash tizimi</title>
+  <title>Mebel360° — Mijozga qulay, ustaga aniq hisoblash tizimi</title>
   <style>
     :root{
       --bg:#f4f8ff;
@@ -1033,7 +1033,7 @@
 
   .right{display:block!important;min-width:0}
   #previewArea.dashboard-grid{
-    display:grid!important;grid-template-columns:minmax(650px,1.5fr) minmax(320px,.75fr) minmax(240px,.55fr);
+    display:grid!important;grid-template-columns:minmax(500px,1.22fr) minmax(330px,.82fr) minmax(280px,.64fr);
     grid-template-areas:"drawing threed summary" "drawing threed short";
     gap:12px;align-items:stretch;margin-bottom:12px;
   }
@@ -1044,8 +1044,8 @@
   #previewArea .dash-short{grid-area:short}
   #previewArea .section-head{margin-bottom:10px!important}
   #previewArea .section-title{font-size:14px!important}.section-title .dot{display:none}
-  #previewArea .drawing-box{min-height:620px!important;border-style:solid!important;border-radius:11px!important;background:#fff!important}
-  #previewArea #preview3dCard .real3d-stage{min-height:500px!important;border-radius:11px!important}
+  #previewArea .drawing-box{min-height:540px!important;border-style:solid!important;border-radius:11px!important;background:#fff!important}
+  #previewArea #preview3dCard .real3d-stage{min-height:420px!important;border-radius:11px!important}
   #previewArea #preview3dCard .preview3d-toolbar{grid-template-columns:1fr 1fr!important;padding:9px!important;gap:7px!important;margin-bottom:9px!important}
   #previewArea #preview3dCard .preview3d-toolbar>div:nth-child(n+3){display:none}
   #previewArea .dash-summary .summary{grid-template-columns:1fr!important;gap:7px!important;max-height:510px;overflow:auto;padding-right:3px}
@@ -1067,7 +1067,7 @@
 
   @media(max-width:1500px){
     #previewArea.dashboard-grid{
-      grid-template-columns:minmax(620px,1.45fr) minmax(310px,.72fr);
+      grid-template-columns:minmax(500px,1.25fr) minmax(330px,.78fr);
       grid-template-areas:"drawing threed" "summary short";
     }
     #previewArea .dash-summary .summary{grid-template-columns:repeat(4,minmax(0,1fr))!important;max-height:none}
@@ -1087,7 +1087,7 @@
     .brand-copy small,.admin-chip div,.admin-chip>span:last-child{display:none}.admin-chip{padding-left:7px}.admin-avatar{width:32px;height:32px}
     #previewArea .dash-summary .summary{grid-template-columns:repeat(2,minmax(0,1fr))!important}
     #previewArea .dash-summary .stat.total{grid-column:1/-1!important}
-    #previewArea .drawing-box{min-height:420px!important}
+    #previewArea .drawing-box{min-height:365px!important}
   }
 
 
@@ -1378,41 +1378,7 @@
 </style>
 </head>
 <body class="customer-mode mebel360-app">
-<div class="m360-brand-splash" id="m360BrandSplash" aria-label="Mebel360 Hisobchi kirish oynasi">
-  <aside class="m360-splash-side">
-    <div class="m360-splash-mini-brand"><img src="assets/mebel360-icon.png" alt="Mebel360"><div><b>Mebel<span>360°</span></b><small>Hisobchi</small></div></div>
-    <div class="m360-splash-nav">
-      <button class="active" type="button">⌂ <span>Kirish</span></button>
-      <button type="button">▥ <span>O‘lchamlar</span></button>
-      <button type="button">▱ <span>Chizma</span></button>
-      <button type="button">☷ <span>Detallar</span></button>
-      <button type="button">◇ <span>3D ko‘rinish</span></button>
-      <button type="button">⚙ <span>Sozlamalar</span></button>
-    </div>
-    <div class="m360-splash-help">? <span>Yordam</span></div>
-  </aside>
-  <main class="m360-splash-main">
-    <div class="m360-splash-lang">🌐 UZ⌄</div>
-    <div class="m360-splash-logo"><img src="assets/mebel360-brand.png" alt="Mebel360 ERP"></div>
-    <section class="m360-splash-card">
-      <h1>Xush kelibsiz!</h1>
-      <p>Mebel o‘lchamlari, detali va materiallarini<br>aniq hisoblang, samarali boshqaring.</p>
-      <div class="m360-splash-time-row">
-        <div class="m360-splash-clock-icon">◷</div>
-        <strong id="m360SplashClock">00:00:00</strong>
-        <i></i>
-        <div><b id="m360SplashDate">—</b><span id="m360SplashDay">—</span></div>
-      </div>
-      <button class="m360-splash-enter" type="button" onclick="m360EnterApp()">Kirish <span>→</span></button>
-      <div class="m360-splash-or">yoki</div>
-      <button class="m360-splash-demo" type="button" onclick="m360EnterApp()">▦ &nbsp; Hisobchi rejimida ochish</button>
-    </section>
-    <div class="m360-splash-secure">♢ <span><b>Xavfsiz ulanish</b><small>Mebel360 Hisobchi · Versiya 1.0</small></span></div>
-  </main>
-</div>
-
 <aside class="app-rail" aria-label="Tezkor menyu">
-  <div class="m360-side-brand"><img src="assets/mebel360-icon.png" alt="Mebel360"><div><b>Mebel<span>360°</span></b><small>Hisobchi</small></div></div>
   <button class="rail-btn active" type="button" title="Bosh sahifa" onclick="window.scrollTo({top:0,behavior:'smooth'})">⌂</button>
   <button class="rail-btn" type="button" title="O‘lchamlar" onclick="document.getElementById('step2')?.scrollIntoView()">▥</button>
   <button class="rail-btn" type="button" title="Chizma" onclick="document.getElementById('previewArea')?.scrollIntoView()">▱</button>
@@ -1425,17 +1391,32 @@
 <div class="wrap">
   <section class="hero app-header">
     <div class="app-brand">
-      <div class="mebel360-logo" aria-label="Mebel360 logo"><img src="assets/mebel360-icon.png" alt="Mebel360"></div>
+      <div class="mebel360-logo" aria-label="Mebel360 logo">
+        <svg viewBox="0 0 72 72" role="img" aria-hidden="true">
+          <defs>
+            <linearGradient id="m360Cube" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#0e5bc7"/>
+              <stop offset="1" stop-color="#18a866"/>
+            </linearGradient>
+          </defs>
+          <circle cx="36" cy="36" r="31" fill="#fff" stroke="#dce8f7" stroke-width="2"/>
+          <path d="M19 24 36 14l17 10-17 10z" fill="#105fcf"/>
+          <path d="M19 24v21l17 10V34z" fill="#0b4d9e"/>
+          <path d="M53 24v21L36 55V34z" fill="url(#m360Cube)"/>
+          <path d="M45 8a30 30 0 0 1 16 11" fill="none" stroke="#0e5bc7" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="m59 13 3 7-8-1" fill="#0e5bc7"/>
+          <path d="M27 64A30 30 0 0 1 11 53" fill="none" stroke="#18a866" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="m13 59-3-7 8 1" fill="#18a866"/>
+        </svg>
+      </div>
       <div class="brand-copy">
-        <div class="brand-line"><strong>Mebel<span>360°</span></strong><i></i><b>Hisobchi</b></div>
-        <small>Mebel o‘lchami, detali va materiallarini aniq hisoblash tizimi</small>
+        <div class="brand-line"><strong>Mebel<span>360°</span></strong><i></i><b>Kalkulyator</b></div>
+        <small>Mijozga qulay, ustaga aniq hisoblash tizimi</small>
       </div>
     </div>
     <nav class="app-header-nav" aria-label="Asosiy menyu">
       <button type="button" class="header-link" onclick="openM360Pro('projects')"><span>▣</span>Loyihalar</button>
       <button type="button" class="header-link pro-center-link" onclick="openM360Pro('builder')"><span>◆</span>Pro markaz</button>
-      <button type="button" class="header-link" onclick="window.location.href='/pro-konstruktor'"><span>▤</span>Pro Konstruktor</button>
-      <button type="button" class="header-link" onclick="window.location.href='/studio-3d'"><span>◈</span>Studio 3D</button>
       <button type="button" class="header-link" onclick="document.getElementById('previewArea')?.scrollIntoView()"><span>↶</span>Natijalar</button>
       <button type="button" class="header-link ai-header-link" onclick="openMebelAI()"><span>✦</span>AI yordamchi</button>
       <div class="lang-switch" aria-label="Til tanlash">
@@ -4953,7 +4934,7 @@
       drawKitchenCabinet(data);
       return;
     }
-    const maxW=700,maxH=510,baseX=85,baseY=22;
+    const maxW=620,maxH=415,baseX=150,baseY=46;
     const scale=Math.min(maxW/Math.max(W,1),maxH/Math.max(H,1));
     const rw=W*scale,rh=H*scale;
     const rx=baseX+(maxW-rw)/2,ry=baseY+(maxH-rh)/2;
@@ -5146,13 +5127,13 @@
     };
     const mat=materials[materialKey]||materials.whiteOak;
 
-    const maxFrontW=500,maxFrontH=460;
+    const maxFrontW=430,maxFrontH=390;
     const scale=Math.min(maxFrontW/Math.max(W,1),maxFrontH/Math.max(H,1));
     const fw=W*scale,fh=H*scale;
     const depth=Math.min(205,Math.max(75,D*scale*.62));
     const rise=Math.min(112,Math.max(38,depth*.48));
-    const x=viewSide==="left"?320:120;
-    const y=110;
+    const x=viewSide==="left"?360:170;
+    const y=132;
     const dx=direction*depth;
     const boardPx=Math.max(5,T*scale);
     const topPx=Math.max(5,topT*scale);
@@ -7454,386 +7435,66 @@ body.mebel360-app.m360-dashboard-dark th,body.mebel360-app.m360-dashboard-dark t
 </style>
 
 
-<style id="m360-clean-white-style">
-/* Mebel360 CLEAN WHITE — oq, sodda va ixcham ko‘rinish */
-body.mebel360-app.m360-clean-white{
-  background:#ffffff!important;
-  color:#182230!important;
-}
-body.mebel360-app.m360-clean-white .wrap{
-  max-width:1480px!important;
-  margin:0 auto!important;
-  padding:0 22px 30px!important;
-}
-/* Chapdagi suzuvchi rail olib tashlandi */
-body.mebel360-app.m360-clean-white .app-rail{display:none!important}
-
-/* Yuqori panel — mockupdagi kabi oddiy oq header */
-body.mebel360-app.m360-clean-white .hero.app-header{
-  position:relative!important;
-  top:auto!important;
-  min-height:82px!important;
-  margin:0 -22px 22px!important;
-  padding:16px 34px!important;
-  border-radius:0!important;
-  background:#fff!important;
-  color:#182230!important;
-  border:0!important;
-  border-bottom:1px solid #e7eaf0!important;
-  box-shadow:none!important;
-  overflow:visible!important;
-}
-body.mebel360-app.m360-clean-white .hero.app-header:after{
-  content:'☰'!important;
-  position:absolute!important;
-  right:32px!important;
-  top:50%!important;
-  transform:translateY(-50%)!important;
-  width:auto!important;height:auto!important;border:0!important;border-radius:0!important;
-  background:transparent!important;
-  color:#344054!important;
-  font-size:27px!important;
-  line-height:1!important;
-}
-body.mebel360-app.m360-clean-white .app-brand{gap:12px!important}
-body.mebel360-app.m360-clean-white .mebel360-logo{width:46px!important;height:46px!important}
-body.mebel360-app.m360-clean-white .brand-line strong{
-  color:#111827!important;
-  font-size:31px!important;
-  letter-spacing:-.04em!important;
-}
-body.mebel360-app.m360-clean-white .brand-line strong span{color:#111827!important}
-body.mebel360-app.m360-clean-white .brand-line i,
-body.mebel360-app.m360-clean-white .brand-line b,
-body.mebel360-app.m360-clean-white .brand-copy small{display:none!important}
-body.mebel360-app.m360-clean-white .app-header-nav{margin-left:auto!important;padding-right:55px!important}
-body.mebel360-app.m360-clean-white .app-header-nav .header-link,
-body.mebel360-app.m360-clean-white .admin-chip{display:none!important}
-body.mebel360-app.m360-clean-white .lang-switch{
-  display:flex!important;
-  background:#f7f8fa!important;
-  border:1px solid #e5e7eb!important;
-  box-shadow:none!important;
-}
-body.mebel360-app.m360-clean-white .lang-btn{color:#667085!important}
-body.mebel360-app.m360-clean-white .lang-btn.active{background:#2563eb!important;color:#fff!important}
-
-/* Asosiy tartib */
-body.mebel360-app.m360-clean-white .layout{
-  grid-template-columns:minmax(400px, .92fr) minmax(560px, 1.35fr)!important;
-  gap:22px!important;
-  align-items:start!important;
-}
-body.mebel360-app.m360-clean-white .left{position:relative!important;top:auto!important}
-body.mebel360-app.m360-clean-white .right{gap:18px!important}
-
-/* Kartalar */
-body.mebel360-app.m360-clean-white .card{
-  background:#fff!important;
-  border:1px solid #e4e7ec!important;
-  border-radius:18px!important;
-  box-shadow:0 4px 16px rgba(16,24,40,.035)!important;
-  color:#182230!important;
-}
-body.mebel360-app.m360-clean-white .card-body{padding:22px!important}
-body.mebel360-app.m360-clean-white .section-head{margin-bottom:18px!important}
-body.mebel360-app.m360-clean-white .section-title{
-  color:#101828!important;
-  font-size:18px!important;
-  font-weight:800!important;
-}
-body.mebel360-app.m360-clean-white .section-title .dot{display:none!important}
-body.mebel360-app.m360-clean-white .section-head>.muted{display:none!important}
-
-/* Ortiqcha yo‘riqnoma va dekor elementlari */
-body.mebel360-app.m360-clean-white .open-drill-box,
-body.mebel360-app.m360-clean-white .customer-tip,
-body.mebel360-app.m360-clean-white .step-strip{display:none!important}
-body.mebel360-app.m360-clean-white .group-title .tag{display:none!important}
-body.mebel360-app.m360-clean-white .group-title h3{color:#202939!important;font-size:14px!important}
-
-/* Rejim tugmalari */
-body.mebel360-app.m360-clean-white .mode-switch{
-  background:#f7f8fa!important;
-  border:1px solid #e5e7eb!important;
-  border-radius:12px!important;
-  padding:4px!important;
-  margin-bottom:15px!important;
-}
-body.mebel360-app.m360-clean-white .mode-btn{
-  border-radius:9px!important;
-  color:#667085!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-body.mebel360-app.m360-clean-white .mode-btn.active{
-  background:#fff!important;
-  color:#175cd3!important;
-  box-shadow:0 1px 4px rgba(16,24,40,.08)!important;
-}
-
-/* Form bloklari */
-body.mebel360-app.m360-clean-white .group{
-  background:#fff!important;
-  border:1px solid #eaecf0!important;
-  border-radius:14px!important;
-  padding:15px!important;
-  margin-bottom:12px!important;
-  box-shadow:none!important;
-}
-body.mebel360-app.m360-clean-white .form-grid>div{
-  background:#fff!important;
-  border:0!important;
-  border-radius:0!important;
-  padding:5px 0!important;
-}
-body.mebel360-app.m360-clean-white label{color:#475467!important;font-weight:700!important}
-body.mebel360-app.m360-clean-white input,
-body.mebel360-app.m360-clean-white select,
-body.mebel360-app.m360-clean-white textarea{
-  min-height:44px!important;
-  background:#fff!important;
-  color:#101828!important;
-  border:1px solid #d0d5dd!important;
-  border-radius:10px!important;
-  box-shadow:0 1px 2px rgba(16,24,40,.03)!important;
-}
-body.mebel360-app.m360-clean-white input:focus,
-body.mebel360-app.m360-clean-white select:focus,
-body.mebel360-app.m360-clean-white textarea:focus{
-  border-color:#84adff!important;
-  box-shadow:0 0 0 3px rgba(46,144,250,.10)!important;
-}
-body.mebel360-app.m360-clean-white .helper{color:#98a2b3!important;font-size:11px!important}
-body.mebel360-app.m360-clean-white .formula-box,
-body.mebel360-app.m360-clean-white .base-info{
-  background:#f8fafc!important;
-  border:1px solid #eaecf0!important;
-  color:#667085!important;
-  box-shadow:none!important;
-}
-
-/* Tugmalar */
-body.mebel360-app.m360-clean-white button.primary,
-body.mebel360-app.m360-clean-white .primary{
-  background:#2563eb!important;
-  color:#fff!important;
-  border:1px solid #2563eb!important;
-  box-shadow:none!important;
-}
-body.mebel360-app.m360-clean-white button.secondary,
-body.mebel360-app.m360-clean-white .secondary{
-  background:#fff!important;
-  color:#344054!important;
-  border:1px solid #d0d5dd!important;
-  box-shadow:none!important;
-}
-body.mebel360-app.m360-clean-white button:hover{filter:brightness(.98)}
-
-/* Summary — faqat toza oq kataklar */
-body.mebel360-app.m360-clean-white .summary{gap:10px!important}
-body.mebel360-app.m360-clean-white .stat,
-body.mebel360-app.m360-clean-white .mini{
-  background:#fff!important;
-  border:1px solid #eaecf0!important;
-  border-radius:12px!important;
-  box-shadow:none!important;
-}
-body.mebel360-app.m360-clean-white .stat span,
-body.mebel360-app.m360-clean-white .mini span{color:#667085!important}
-body.mebel360-app.m360-clean-white .stat b,
-body.mebel360-app.m360-clean-white .mini b{color:#101828!important}
-body.mebel360-app.m360-clean-white .stat.total{
-  background:#eff6ff!important;
-  border-color:#bfdbfe!important;
-}
-body.mebel360-app.m360-clean-white .stat.total b{color:#2563eb!important}
-
-/* Ikki marta takrorlanadigan mijoz xulosasi ixchamlashtirildi */
-body.mebel360-app.m360-clean-white .customer-summary-card{display:none!important}
-
-/* Chizma va 3D */
-body.mebel360-app.m360-clean-white .content-grid{gap:18px!important}
-body.mebel360-app.m360-clean-white .drawing-box,
-body.mebel360-app.m360-clean-white .real3d-stage{
-  background:#fbfcfe!important;
-  border:1px solid #e4e7ec!important;
-  border-radius:14px!important;
-}
-body.mebel360-app.m360-clean-white .warning,
-body.mebel360-app.m360-clean-white .estimate-disclaimer{
-  background:#fffcf5!important;
-  border:1px solid #f5e0b8!important;
-  color:#7a5b19!important;
-}
-body.mebel360-app.m360-clean-white .preview-total{
-  background:#eff6ff!important;
-  border:1px solid #bfdbfe!important;
-  color:#101828!important;
-}
-body.mebel360-app.m360-clean-white .preview-total strong{color:#2563eb!important}
-
-/* Jadvallar va texnik qism */
-body.mebel360-app.m360-clean-white table{background:#fff!important;color:#344054!important}
-body.mebel360-app.m360-clean-white th{background:#f9fafb!important;color:#475467!important}
-body.mebel360-app.m360-clean-white th,
-body.mebel360-app.m360-clean-white td{border-color:#eaecf0!important}
-body.mebel360-app.m360-clean-white .tabs .tab{background:#f2f4f7!important;color:#475467!important;border:1px solid #eaecf0!important}
-body.mebel360-app.m360-clean-white .tabs .tab.active{background:#2563eb!important;color:#fff!important;border-color:#2563eb!important}
-
-/* DARK dashboard tomonidan yaratilgan ortiqcha bloklar bo‘lsa, yashiriladi */
-body.mebel360-app.m360-clean-white .m360-top-tabs,
-body.mebel360-app.m360-clean-white #m360BottomGrid,
-body.mebel360-app.m360-clean-white .m360-ai-card,
-body.mebel360-app.m360-clean-white .m360-note-card{display:none!important}
-
-@media(max-width:1100px){
-  body.mebel360-app.m360-clean-white .layout{grid-template-columns:1fr!important}
-  body.mebel360-app.m360-clean-white .app-header-nav{display:none!important}
-}
-@media(max-width:700px){
-  body.mebel360-app.m360-clean-white .wrap{padding:0 10px 20px!important}
-  body.mebel360-app.m360-clean-white .hero.app-header{margin:0 -10px 14px!important;padding:12px 18px!important;min-height:68px!important}
-  body.mebel360-app.m360-clean-white .hero.app-header:after{right:16px!important}
-  body.mebel360-app.m360-clean-white .brand-line strong{font-size:25px!important}
-  body.mebel360-app.m360-clean-white .mebel360-logo{width:38px!important;height:38px!important}
-  body.mebel360-app.m360-clean-white .card-body{padding:14px!important}
-  body.mebel360-app.m360-clean-white .form-grid>div{grid-template-columns:1fr!important;gap:6px!important}
-  body.mebel360-app.m360-clean-white .summary{grid-template-columns:1fr 1fr!important}
-}
-</style>
-
-<style id="m360-orange-navy-brand-v1">
-:root{
-  --m360-navy:#071c42;
-  --m360-navy2:#0b2d5f;
-  --m360-orange:#ff6b00;
-  --m360-orange2:#ff8a00;
-  --m360-cyan:#11a7d8;
-  --m360-sky:#eaf7ff;
-  --m360-ink:#0b1b36;
-}
-/* ===== Mebel360 Hisobchi — navy / orange / cyan corporate theme ===== */
-body.mebel360-app.m360-clean-white{
-  padding-left:220px!important;
-  background:
-    radial-gradient(circle at 12% 6%,rgba(17,167,216,.12),transparent 25%),
-    radial-gradient(circle at 95% 82%,rgba(255,107,0,.08),transparent 27%),
-    linear-gradient(155deg,#fbfdff 0%,#f3f9ff 48%,#ffffff 100%)!important;
-  color:var(--m360-ink)!important;
-}
-body.mebel360-app.m360-clean-white .wrap{max-width:1560px!important;padding:0 24px 34px!important}
-body.mebel360-app.m360-clean-white .app-rail{
-  display:flex!important;left:0!important;top:0!important;bottom:0!important;width:220px!important;
-  padding:18px 14px 18px!important;gap:8px!important;align-items:stretch!important;
-  background:
-    radial-gradient(circle at 15% 92%,rgba(17,167,216,.18),transparent 26%),
-    linear-gradient(180deg,#061936 0%,#072552 55%,#061936 100%)!important;
-  box-shadow:14px 0 38px rgba(7,28,66,.13)!important;
-}
-.m360-side-brand{display:flex;align-items:center;gap:9px;padding:4px 5px 17px;margin-bottom:5px;border-bottom:1px solid rgba(255,255,255,.09)}
-.m360-side-brand img{width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 5px 12px rgba(0,0,0,.18))}
-.m360-side-brand div{display:flex;flex-direction:column;min-width:0}.m360-side-brand b{font-size:18px;color:#fff;letter-spacing:-.04em;white-space:nowrap}.m360-side-brand b span{color:var(--m360-orange)}.m360-side-brand small{margin-top:2px;color:#7fdcff;font-size:11px;font-weight:800}
-body.mebel360-app.m360-clean-white .rail-btn{
-  display:grid!important;grid-template-columns:30px 1fr!important;align-items:center!important;justify-content:start!important;
-  width:100%!important;height:48px!important;min-height:48px!important;padding:0 13px!important;gap:7px!important;
-  border-radius:12px!important;background:transparent!important;color:#d7e8ff!important;border:1px solid transparent!important;
-  font-size:19px!important;text-align:left!important;box-shadow:none!important;
-}
-body.mebel360-app.m360-clean-white .rail-btn::after{content:attr(title);font-size:12.5px;font-weight:800;white-space:nowrap;color:inherit}
-body.mebel360-app.m360-clean-white .rail-btn:hover,
-body.mebel360-app.m360-clean-white .rail-btn.active{background:linear-gradient(135deg,#0b70bf,#139bd5)!important;border-color:rgba(255,255,255,.08)!important;color:#fff!important;box-shadow:0 10px 24px rgba(17,167,216,.18)!important}
-body.mebel360-app.m360-clean-white .rail-collapse{margin-top:auto!important}.rail-spacer{display:none!important}
-
-body.mebel360-app.m360-clean-white .hero.app-header{
-  position:sticky!important;top:0!important;z-index:80!important;min-height:86px!important;
-  margin:0 -24px 20px!important;padding:14px 30px!important;
-  background:rgba(255,255,255,.94)!important;border-bottom:1px solid rgba(17,167,216,.16)!important;
-  box-shadow:0 12px 30px rgba(7,28,66,.055)!important;backdrop-filter:blur(16px)!important;
-}
-body.mebel360-app.m360-clean-white .hero.app-header:after{display:none!important}
-body.mebel360-app.m360-clean-white .app-brand{gap:12px!important}
-body.mebel360-app.m360-clean-white .mebel360-logo{display:grid!important;place-items:center!important;width:58px!important;height:58px!important;flex:0 0 58px!important}
-body.mebel360-app.m360-clean-white .mebel360-logo img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 7px 12px rgba(7,28,66,.10))}
-body.mebel360-app.m360-clean-white .brand-copy{display:block!important}
-body.mebel360-app.m360-clean-white .brand-line{gap:10px!important}
-body.mebel360-app.m360-clean-white .brand-line strong{display:inline-block!important;color:var(--m360-navy)!important;font-size:28px!important;letter-spacing:-.045em!important}
-body.mebel360-app.m360-clean-white .brand-line strong span{color:var(--m360-orange)!important}
-body.mebel360-app.m360-clean-white .brand-line i{display:inline-block!important;width:1px!important;height:27px!important;background:#dfe8f2!important}
-body.mebel360-app.m360-clean-white .brand-line b{display:inline-block!important;color:var(--m360-cyan)!important;font-size:18px!important}
-body.mebel360-app.m360-clean-white .brand-copy small{display:block!important;color:#758aa2!important;font-size:10.5px!important;font-weight:700!important;margin-top:2px!important}
-body.mebel360-app.m360-clean-white .lang-switch{margin-left:auto!important;background:#fff!important;border:1px solid #dce8f2!important;border-radius:13px!important;box-shadow:0 7px 18px rgba(7,28,66,.05)!important}
-body.mebel360-app.m360-clean-white .lang-btn.active{background:linear-gradient(135deg,var(--m360-cyan),#087bb9)!important;color:#fff!important}
-
-body.mebel360-app.m360-clean-white .card{border:1px solid #e0eaf3!important;border-radius:18px!important;box-shadow:0 12px 32px rgba(7,28,66,.05)!important}
-body.mebel360-app.m360-clean-white .group{border:1px solid #e7eef5!important;border-radius:15px!important;background:rgba(255,255,255,.96)!important}
-body.mebel360-app.m360-clean-white .section-title{color:var(--m360-navy)!important}
-body.mebel360-app.m360-clean-white .group-title h3{color:#213a5a!important}
-body.mebel360-app.m360-clean-white input,
-body.mebel360-app.m360-clean-white select,
-body.mebel360-app.m360-clean-white textarea{border-color:#d7e3ef!important;background:#fff!important;color:#0e2949!important;border-radius:11px!important}
-body.mebel360-app.m360-clean-white input:focus,
-body.mebel360-app.m360-clean-white select:focus,
-body.mebel360-app.m360-clean-white textarea:focus{border-color:var(--m360-cyan)!important;box-shadow:0 0 0 3px rgba(17,167,216,.12)!important}
-body.mebel360-app.m360-clean-white button.primary,
-body.mebel360-app.m360-clean-white .primary{background:linear-gradient(135deg,var(--m360-orange),var(--m360-orange2))!important;border-color:var(--m360-orange)!important;color:#fff!important;box-shadow:0 10px 22px rgba(255,107,0,.16)!important}
-body.mebel360-app.m360-clean-white button.secondary,
-body.mebel360-app.m360-clean-white .secondary{background:#fff!important;color:#0b5f99!important;border-color:#bed9e8!important}
-body.mebel360-app.m360-clean-white .stat.total,
-body.mebel360-app.m360-clean-white .preview-total{background:linear-gradient(135deg,#fff4e9,#fffaf4)!important;border-color:#ffd7b5!important;color:var(--m360-navy)!important}
-body.mebel360-app.m360-clean-white .stat.total b,
-body.mebel360-app.m360-clean-white .preview-total strong{color:var(--m360-orange)!important}
-body.mebel360-app.m360-clean-white .tabs .tab.active{background:linear-gradient(135deg,#0d8fc8,var(--m360-cyan))!important;border-color:var(--m360-cyan)!important;color:#fff!important}
-body.mebel360-app.m360-clean-white .mode-btn.active{color:#0b6c9d!important;border-color:#cae8f5!important}
-body.mebel360-app.m360-clean-white .calc-fab,
-body.mebel360-app.m360-clean-white .ai-fab{background:linear-gradient(135deg,var(--m360-orange),var(--m360-cyan))!important;box-shadow:0 16px 32px rgba(17,167,216,.20)!important}
-
-/* opening / login-like branded screen */
-.m360-brand-splash{position:fixed;inset:0;z-index:99999;display:grid;grid-template-columns:260px minmax(0,1fr);background:linear-gradient(145deg,#f9fcff 0%,#edf7ff 48%,#fff 100%);color:var(--m360-navy);overflow:hidden;transition:opacity .28s ease,visibility .28s ease}
-.m360-brand-splash.hidden{opacity:0;visibility:hidden;pointer-events:none}
-.m360-splash-side{display:flex;flex-direction:column;padding:26px 18px 20px;background:linear-gradient(180deg,#061936 0%,#072552 56%,#061936 100%);box-shadow:18px 0 46px rgba(7,28,66,.11);position:relative;overflow:hidden}
-.m360-splash-side:after{content:"";position:absolute;width:310px;height:310px;border:1px solid rgba(17,167,216,.25);border-radius:50%;left:-160px;bottom:-120px;box-shadow:0 0 0 34px rgba(17,167,216,.04),0 0 0 68px rgba(255,107,0,.03)}
-.m360-splash-mini-brand{display:flex;align-items:center;gap:9px;position:relative;z-index:2}.m360-splash-mini-brand img{width:54px;height:54px;object-fit:contain}.m360-splash-mini-brand div{display:flex;flex-direction:column}.m360-splash-mini-brand b{color:#fff;font-size:20px;letter-spacing:-.05em}.m360-splash-mini-brand b span{color:var(--m360-orange)}.m360-splash-mini-brand small{color:#7fdcff;font-size:10px;font-weight:900}
-.m360-splash-nav{display:grid;gap:8px;margin-top:42px;position:relative;z-index:2}.m360-splash-nav button{display:grid;grid-template-columns:30px 1fr;gap:7px;align-items:center;min-height:52px;padding:0 14px;border:0;border-radius:12px;background:transparent;color:#dcecff;font-size:19px;text-align:left;box-shadow:none}.m360-splash-nav button span{font-size:13px;font-weight:800}.m360-splash-nav button.active{background:linear-gradient(135deg,#0b70bf,#139bd5);color:#fff}.m360-splash-help{margin-top:auto;position:relative;z-index:2;color:#dcecff;font-size:19px;display:flex;gap:12px;align-items:center;padding:10px 14px}.m360-splash-help span{font-size:13px;font-weight:800}
-.m360-splash-main{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 40px;background:radial-gradient(circle at 77% 50%,rgba(17,167,216,.07),transparent 25%),radial-gradient(circle at 30% 22%,rgba(255,107,0,.055),transparent 20%)}
-.m360-splash-main:after{content:"";position:absolute;right:4%;bottom:5%;width:min(520px,40vw);height:min(390px,34vw);opacity:.24;background:linear-gradient(90deg,transparent 49.4%,rgba(17,167,216,.22) 49.5%,rgba(17,167,216,.22) 50.5%,transparent 50.6%),linear-gradient(transparent 49.4%,rgba(17,167,216,.18) 49.5%,rgba(17,167,216,.18) 50.5%,transparent 50.6%);background-size:38px 38px;mask-image:linear-gradient(135deg,transparent 0,#000 42%,#000 100%);pointer-events:none}
-.m360-splash-lang{position:absolute;right:28px;top:24px;z-index:3;padding:11px 14px;border:1px solid #e0e8f1;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(7,28,66,.06);font-size:12px;font-weight:900}
-.m360-splash-logo{position:relative;z-index:2;width:min(650px,70vw);margin-bottom:12px}.m360-splash-logo img{display:block;width:100%;height:auto;filter:drop-shadow(0 13px 18px rgba(7,28,66,.07))}
-.m360-splash-card{position:relative;z-index:2;width:min(620px,76vw);padding:28px 38px 30px;border:1px solid rgba(7,28,66,.08);border-radius:20px;background:rgba(255,255,255,.94);box-shadow:0 22px 55px rgba(7,28,66,.10);text-align:center}.m360-splash-card h1{margin:0;color:var(--m360-navy);font-size:38px;letter-spacing:-.04em}.m360-splash-card>p{margin:8px 0 20px;color:#61738b;font-size:15px;line-height:1.48}.m360-splash-time-row{display:grid;grid-template-columns:48px auto 1px auto;gap:15px;align-items:center;justify-content:center;margin:4px auto 22px}.m360-splash-clock-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#eaf7ff;color:#0b8fc8;font-size:23px}.m360-splash-time-row>strong{font-size:38px;letter-spacing:.01em;color:var(--m360-navy)}.m360-splash-time-row>i{display:block;width:1px;height:45px;background:#dfe6ee}.m360-splash-time-row>div:last-child{text-align:left}.m360-splash-time-row b,.m360-splash-time-row span{display:block}.m360-splash-time-row b{font-size:13px;color:#213a5a}.m360-splash-time-row span{margin-top:3px;color:#0b8fc8;font-size:13px;font-weight:800}.m360-splash-enter{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--m360-orange),var(--m360-orange2));color:#fff;font-size:16px;font-weight:900;box-shadow:0 12px 28px rgba(255,107,0,.18)}.m360-splash-enter span{margin-left:auto;display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(255,255,255,.7);border-radius:50%;font-size:15px}.m360-splash-or{display:flex;align-items:center;gap:10px;margin:18px 0 10px;color:#9aa8ba;font-size:12px}.m360-splash-or:before,.m360-splash-or:after{content:"";flex:1;height:1px;background:#e4eaf1}.m360-splash-demo{border:0;background:transparent;color:#0b8fc8;font-size:13px;font-weight:900;box-shadow:none}.m360-splash-secure{position:absolute;right:30px;bottom:22px;display:flex;align-items:center;gap:10px;color:#173a63;font-size:20px}.m360-splash-secure span{display:flex;flex-direction:column}.m360-splash-secure b{font-size:12px}.m360-splash-secure small{margin-top:3px;color:#8796a8;font-size:10px}
-@media(max-width:1100px){body.mebel360-app.m360-clean-white{padding-left:0!important}.app-rail{display:none!important}.m360-brand-splash{grid-template-columns:1fr}.m360-splash-side{display:none}.m360-splash-logo{width:min(620px,86vw)}.m360-splash-card{width:min(620px,90vw)}}
-@media(max-width:650px){body.mebel360-app.m360-clean-white .wrap{padding:0 10px 22px!important}.m360-brand-splash{overflow:auto}.m360-splash-main{min-height:100vh;padding:72px 14px 30px;justify-content:flex-start}.m360-splash-logo{width:96vw;margin-top:10px}.m360-splash-card{width:96vw;padding:24px 18px}.m360-splash-card h1{font-size:31px}.m360-splash-time-row{grid-template-columns:40px auto;gap:9px}.m360-splash-time-row>i,.m360-splash-time-row>div:last-child{display:none}.m360-splash-time-row>strong{font-size:31px}.m360-splash-secure{position:static;margin-top:20px}}
-</style>
-<script id="m360-brand-start-script">
+<script id="m360-dark-dashboard-script">
 (function(){
-  const days=['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
-  const months=['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
-  function two(v){return String(v).padStart(2,'0')}
-  function tick(){
-    const n=new Date();
-    const c=document.getElementById('m360SplashClock');
-    const d=document.getElementById('m360SplashDate');
-    const y=document.getElementById('m360SplashDay');
-    if(c)c.textContent=two(n.getHours())+':'+two(n.getMinutes())+':'+two(n.getSeconds());
-    if(d)d.textContent=n.getDate()+'-'+months[n.getMonth()]+', '+n.getFullYear();
-    if(y)y.textContent=days[n.getDay()];
+  function selectedText(id){ const el=document.getElementById(id); if(!el) return '—'; if(el.tagName==='SELECT' && el.selectedOptions && el.selectedOptions[0]) return el.selectedOptions[0].textContent.trim(); return String(el.value||el.textContent||'—').trim(); }
+  function text(id){ return String(document.getElementById(id)?.textContent || '').trim(); }
+  function value(id){ return String(document.getElementById(id)?.value || '').trim(); }
+  function ensureDashboard(){
+    document.body.classList.add('m360-dashboard-dark');
+    const summaryCard=document.querySelector('.customer-summary-card');
+    if(summaryCard && !summaryCard.querySelector('.m360-top-tabs')){
+      const leftCol=summaryCard.querySelector('.customer-summary > div:first-child');
+      if(leftCol){
+        const tabs=document.createElement('div');
+        tabs.className='m360-top-tabs';
+        tabs.innerHTML = `
+          <button class="m360-tab" type="button" onclick="document.getElementById('previewArea')?.scrollIntoView({behavior:'smooth'})">2D chizma</button>
+          <button class="m360-tab" type="button" onclick="document.getElementById('preview3dCard')?.scrollIntoView({behavior:'smooth'})">3D ko‘rinish</button>
+          <button class="m360-tab" type="button" onclick="document.querySelector('.tab[data-tab='drilling']')?.click();document.querySelector('.technical-details')?.scrollIntoView({behavior:'smooth'})">Teshiklar</button>
+          <button class="m360-tab" type="button" onclick="document.querySelector('.tab[data-tab='cut']')?.click();document.querySelector('.technical-details')?.scrollIntoView({behavior:'smooth'})">Detallar ro‘yxati</button>`;
+        leftCol.appendChild(tabs);
+      }
+    }
+    const previewArea=document.getElementById('previewArea');
+    const preview3d=document.getElementById('preview3dCard');
+    if(previewArea && preview3d){
+      previewArea.classList.add('m360-dashboard-grid');
+      const cards=previewArea.querySelectorAll(':scope > .card');
+      const infoCard=cards[1];
+      if(preview3d.parentElement!==previewArea) previewArea.appendChild(preview3d);
+      if(infoCard && !infoCard.dataset.m360Converted){
+        infoCard.dataset.m360Converted='1';
+        infoCard.id='m360MaterialCard';
+        infoCard.innerHTML=`<div class="card-body"><div class="section-head"><div class="section-title">Material va furnitura</div></div><div class="m360-material-list"><div class="m360-material-item"><span>Mebel turi</span><b id="m360MatProduct">Shkaf</b></div><div class="m360-material-item"><span>Material rangi</span><b id="m360MatColorWrap"><span class="m360-swatch"></span><span id="m360MatColor">Oq eman yog‘och</span></b></div><div class="m360-material-item"><span>Asosiy material</span><b id="m360MatMain">MDF 16 mm</b></div><div class="m360-material-item"><span>Orqa panel</span><b id="m360MatBack">LXDF 4 mm</b></div><div class="m360-material-item"><span>Kromka</span><b id="m360MatKromka">2 mm</b></div><div class="m360-material-item"><span>Tutqich</span><b id="m360MatHandle">Yashirin tutqich</b></div></div><div class="m360-material-actions"><button type="button" onclick="try{calculate()}catch(e){}">Kalkulyator</button><button type="button" onclick="try{window.printCustomerProposal?printCustomerProposal():window.print()}catch(e){window.print()}">Chop etish</button></div></div>`;
+        previewArea.appendChild(infoCard);
+      }
+      if(!document.getElementById('m360BottomGrid')){
+        const grid=document.createElement('div');
+        grid.id='m360BottomGrid'; grid.className='m360-bottom-grid';
+        grid.innerHTML=`<div class="card m360-ai-card"><div class="card-body"><div class="m360-ai-icon">🤖</div><h3>AI yordamchi</h3><p>Bu shkaf loyihasini takomillashtirish yoki narx bo‘yicha savol berishingiz mumkin.</p><button type="button">Savol berish</button></div></div><div class="card m360-note-card"><div class="card-body"><h3>Loyiha izohi</h3><p id="m360ProjectNote">Bu chizma mebelning taxminiy ko‘rinishini beradi. Ishlab chiqarishdan oldin usta yakuniy o‘lchov va materialni tasdiqlaydi.</p></div></div><div class="card m360-note-card"><div class="card-body"><h3>Hisoblash eslatmasi</h3><p id="m360CalcNote">Narxlar taxminiy hisoblangan. Yakuniy narx material narxlari va furnitura bo‘yicha o‘zgarishi mumkin.</p></div></div>`;
+        const tech=document.querySelector('.technical-details'); if(tech) tech.before(grid); else previewArea.after(grid);
+        grid.querySelector('.m360-ai-card button')?.addEventListener('click',()=>{ const fab=document.querySelector('.ai-fab'); if(fab) fab.click(); else document.querySelector('.ai-panel')?.classList.add('open'); });
+      }
+    }
   }
-  window.m360EnterApp=function(){
-    const s=document.getElementById('m360BrandSplash');
-    if(s)s.classList.add('hidden');
-  };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',tick);else tick();
-  setInterval(tick,1000);
+  function updateDashboardData(){
+    const set=(id,val)=>{const el=document.getElementById(id); if(el && val!==undefined) el.textContent=val;};
+    set('m360MatProduct', text('productTypeOut') || selectedText('productType'));
+    set('m360MatColor', selectedText('material3d'));
+    set('m360MatMain', `MDF ${value('t') || '16'} mm`);
+    const backText=selectedText('backType'); set('m360MatBack', /paz/i.test(backText) ? 'LXDF 4 mm · pazga kiradi' : 'LXDF 4 mm');
+    set('m360MatKromka', '2 mm'); set('m360MatHandle', 'Yashirin tutqich');
+    set('m360ProjectNote', value('projectNote') || 'Bu chizma mebelning taxminiy ko‘rinishini beradi. Ishlab chiqarishdan oldin usta yakuniy o‘lchov va materialni tasdiqlaydi.');
+    set('m360CalcNote', 'Narxlar taxminiy hisoblangan. Yakuniy narx material narxlari va furnitura bo‘yicha o‘zgarishi mumkin.');
+    const colorName=(selectedText('material3d')||'').toLowerCase(); const swatch=document.querySelector('#m360MatColorWrap .m360-swatch');
+    if(swatch){ let bg='linear-gradient(135deg,#d7c4a4,#a98c67)'; if(colorName.includes('yong')) bg='linear-gradient(135deg,#7b5a43,#4e3527)'; else if(colorName.includes('oq')) bg='linear-gradient(135deg,#e7dfcf,#c8b99f)'; else if(colorName.includes('grafit')) bg='linear-gradient(135deg,#6b7280,#374151)'; else if(colorName.includes('kapuchino')) bg='linear-gradient(135deg,#c8aa8e,#8d6e59)'; else if(colorName.includes('yashil')) bg='linear-gradient(135deg,#2f6d57,#123d33)'; swatch.style.background=bg; }
+  }
+  function applyDefaultsOnce(){ const openSel=document.getElementById('preview3dMode'); if(openSel && !openSel.dataset.m360Defaulted){ openSel.value='open'; openSel.dataset.m360Defaulted='1'; openSel.dispatchEvent(new Event('change',{bubbles:true})); } }
+  function init(){ ensureDashboard(); applyDefaultsOnce(); if(typeof window.calculate==='function' && !window.__m360DashboardPatched){ const orig=window.calculate; window.calculate=function(){ const res=orig.apply(this,arguments); try{ensureDashboard(); updateDashboardData();}catch(e){console.warn(e)} return res; }; window.__m360DashboardPatched=true; } try{updateDashboardData();}catch(e){} setTimeout(()=>{try{ensureDashboard(); updateDashboardData(); if(typeof calculate==='function') calculate();}catch(e){console.warn(e)}},120); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 </script>
 
-<script id="m360-clean-white-script">
-(function(){
-  function initClean(){
-    document.body.classList.remove('m360-dashboard-dark');
-    document.body.classList.add('m360-clean-white');
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initClean); else initClean();
-})();
-</script>
 </body>
 </html>

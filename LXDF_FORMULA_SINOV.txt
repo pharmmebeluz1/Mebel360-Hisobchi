@@ -1,0 +1,22 @@
+MEBEL360 V8 — LXDF FORMULA SINOVI
+
+Shkaf:
+- Balandlik: 2200 mm
+- Eni: 1900 mm
+- Material qalinligi: 16 mm
+- Bo‘lim: 3 ta
+- Sokol: 70 mm
+
+Hisob:
+- LXDF balandligi: 2200 - 70 = 2130 mm
+- Ichki eni: (1900 - ((3 + 1) x 16)) / 3 = 612 mm
+- Ikki chet: 612 + 22 = 634 mm — 2 ta
+- O‘rta: 612 + 14 = 626 mm — 1 ta
+
+Miqdor 6 bo‘lsa:
+- 2130 x 634 mm — 12 ta
+- 2130 x 626 mm — 6 ta
+
+V8 tuzatishlari:
+- backPanelGroups scope xatosi tuzatildi (hisob to‘xtab qolmaydi).
+- Formula chap/o‘ng bo‘limning qo‘lda kiritilgan eniga emas, aynan teng ichki en formulasiga bog‘landi.

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mebel360 Studio 3D - Professional Konstruktor</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <style>
+    :root {
+      --bg-dark: #090b10;
+      --card-bg: rgba(18, 22, 33, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #11a7d8;
+      --accent-grad: linear-gradient(135deg, #ff6b00 0%, #11a7d8 100%);
+      --accent-green: #00e676;
+      --text-main: #f1f5f9;
+      --text-sub: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg-dark); color: var(--text-main); padding: 18px; min-height: 100vh; overflow-x: hidden; }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-logo {
+      width: 32px; height: 32px; background: var(--accent-grad);
+      border-radius: 8px; display: grid; place-content: center;
+      font-weight: 900; color: #000; font-size: 16px;
+    }
+    .brand h1 { font-size: 20px; font-weight: 800; letter-spacing: 0.5px; }
+    .brand h1 span { color: var(--accent); }
+
+    .app-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 1050px) { .app-layout { grid-template-columns: 1fr; } }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .input-box { margin-bottom: 10px; }
+    .input-box label { display: block; font-size: 11px; text-transform: uppercase; color: var(--text-sub); font-weight: 700; margin-bottom: 4px; }
+    .input-box input, .input-box select {
+      width: 100%; background: #0c0f17; border: 1px solid #1e2538; color: #fff;
+      padding: 9px 12px; border-radius: 7px; font-size: 13px; outline: none; transition: 0.2s;
+    }
+    .input-box input:focus, .input-box select:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 242, 254, 0.25); }
+
+    .btn-action {
+      width: 100%; padding: 11px; border: none; border-radius: 8px;
+      font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.25s transform, 0.25s background;
+      display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px;
+    }
+    .btn-action:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent-grad); color: #000; }
+    .btn-export { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: #000; }
+
+    /* 3D Viewport */
+    .viewport-box {
+      height: 520px; position: relative; border-radius: 12px;
+      overflow: hidden; border: 1px solid var(--card-border);
+      background: radial-gradient(circle at center, #1b2234 0%, #080a0f 100%);
+    }
+    #three-canvas-container { width: 100%; height: 100%; }
+
+    .viewport-toolbar {
+      position: absolute; top: 12px; right: 12px;
+      display: flex; gap: 8px; z-index: 10;
+    }
+    .tool-btn {
+      background: rgba(18, 22, 33, 0.75); border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      backdrop-filter: blur(8px); cursor: pointer; transition: 0.2s;
+    }
+    .tool-btn:hover, .tool-btn.active { background: var(--accent); color: #000; }
+
+    .stats-badge {
+      position: absolute; bottom: 12px; left: 12px;
+      background: rgba(0, 0, 0, 0.6); padding: 6px 12px; border-radius: 6px;
+      font-size: 11px; color: var(--text-sub); border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* Tabs & Table */
+    .data-card { margin-top: 18px; }
+    .tab-header { display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; }
+    .tab-item { background: transparent; border: none; color: var(--text-sub); font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+    .tab-item.active { background: #1a2233; color: var(--accent); }
+    .table-wrapper { overflow-x: auto; max-height: 260px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; }
+    th { background: #131926; color: var(--accent); padding: 10px; font-weight: 700; position: sticky; top: 0; }
+    td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #cbd5e1; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    #export-log { font-size: 12px; text-align: center; font-weight: bold; margin-top: 8px; min-height: 18px; }
+
+
+    .home-link {
+      display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+      color:var(--text-main); background:rgba(255,255,255,.06);
+      border:1px solid var(--card-border); border-radius:8px; padding:8px 11px;
+      font-size:12px; font-weight:700; transition:.2s;
+    }
+    .home-link:hover { border-color:var(--accent); color:var(--accent); background:rgba(0,242,254,.06); }
+    .header-actions { display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end; }
+
+  </style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <div class="brand">
+      <div class="brand-logo">360</div>
+      <h1>Mebel360° <span>Studio 3D</span></h1>
+    </div>
+    <div class="header-actions">
+      <div style="font-size: 12px; color: var(--text-sub);">Realistik Rendering & Raskroy Integratsiyasi</div>
+      <a class="home-link" href="/">← Asosiy Mebel360</a>
+    </div>
+  </div>
+
+  <div class="app-layout">
+    <!-- Chap: Parametrlar va buyruqlar -->
+    <div class="glass-card">
+      <div class="form-grid">
+        <div class="input-box">
+          <label>Balandlik (H, mm)</label>
+          <input type="number" id="inp_h" value="2200" step="10">
+        </div>
+        <div class="input-box">
+          <label>Kenglik (W, mm)</label>
+          <input type="number" id="inp_w" value="1200" step="10">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="input-box">
+          <label>Chuqurlik (D, mm)</label>
+          <input type="number" id="inp_d" value="580" step="10">
+        </div>
+        <div class="input-box">
+          <label>Tsokol (Oyoq, mm)</label>
+          <input type="number" id="inp_tsokol" value="80" step="5">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="input-box">
+          <label>Bo'linmalar</label>
+          <select id="inp_sections">
+            <option value="1">1 ta seksiya</option>
+            <option value="2" selected>2 ta seksiya</option>
+            <option value="3">3 ta seksiya</option>
+          </select>
+        </div>
+        <div class="input-box">
+          <label>Polkalar soni</label>
+          <input type="number" id="inp_shelves" value="4" min="0" max="15">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="input-box">
+          <label>Tortmalar (Yashik)</label>
+          <input type="number" id="inp_drawers" value="2" min="0" max="6">
+        </div>
+        <div class="input-box">
+          <label>Fasad turi</label>
+          <select id="inp_doors">
+            <option value="hinged" selected>Ochiladigan fasad</option>
+            <option value="none">Fasadsiz (Ochiq)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="input-box">
+        <label>Material va Tekstura</label>
+        <select id="inp_material">
+          <option value="walnut" selected>Yong'oq (Premium Walnut Wood)</option>
+          <option value="oak">Oq Dub (Natural White Oak)</option>
+          <option value="anthracite">Antratsit Mat (Matte Charcoal)</option>
+          <option value="white">Oq Gloss (Modern Alpine White)</option>
+        </select>
+      </div>
+
+      <button id="btn_render" class="btn-action btn-primary">🔄 3D Sahifani Yangilash</button>
+      <button id="btn_export_2dplace" class="btn-action btn-export">⚡ 2D Place ga Eksport</button>
+      <div id="export-log"></div>
+    </div>
+
+    <!-- O'ng: 3D Interaktiv Viewport -->
+    <div class="viewport-box">
+      <div class="viewport-toolbar">
+        <button id="btn_toggle_door" class="tool-btn">🚪 Eshikni Ochish</button>
+        <button id="btn_toggle_drawer" class="tool-btn">🗄️ Tortmani Ochish</button>
+        <button id="btn_xray" class="tool-btn">🔍 Rentgen (X-Ray)</button>
+        <button id="btn_reset_cam" class="tool-btn">📐 Markaz</button>
+      </div>
+      <div id="three-canvas-container"></div>
+      <div class="stats-badge" id="stats_text">🖱️ Aylantirish: Chap tugma | Surish: Shift+Sichqoncha | Zoom: G'ildirak</div>
+    </div>
+  </div>
+
+  <!-- Pastki: Detallar va Furnitura Jadvallari -->
+  <div class="glass-card data-card">
+    <div class="tab-header">
+      <button class="tab-item active" onclick="showTab('tab_p')">📋 Detallar Raskroyi (2D Place)</button>
+      <button class="tab-item" onclick="showTab('tab_h')">🔩 Furnitura & Kromka Hisobi</button>
+    </div>
+
+    <div id="tab_p" class="table-wrapper">
+      <table id="table_parts">
+        <thead>
+          <tr>
+            <th>Detall Nomi</th>
+            <th>Uzunligi (mm)</th>
+            <th>Kengligi (mm)</th>
+            <th>Soni</th>
+            <th>Material</th>
+            <th>Kromka Turi</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="tab_h" class="table-wrapper" style="display:none;">
+      <table id="table_hardware">
+        <thead>
+          <tr>
+            <th>Furnitura Nomi</th>
+            <th>Kerakli Miqdor</th>
+            <th>Birlik</th>
+            <th>Vazifasi</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let scene, camera, renderer, controls;
+    let cabinetGroup, doorMeshes = [], drawerMeshes = [];
+    let isDoorsOpen = false, isDrawersOpen = false, isXray = false;
+    let targetDoorRot = 0, currentDoorRot = 0;
+    let targetDrawerOffset = 0, currentDrawerOffset = 0;
+    const T = 16; // LDSP qalinligi
+
+    // Protsedurali Realistik Yog'och Teksturasi Generator
+    function generateWoodTexture(primaryHex, secondaryHex) {
+      const c = document.createElement('canvas');
+      c.width = 512; c.height = 512;
+      const ctx = c.getContext('2d');
+      
+      ctx.fillStyle = primaryHex;
+      ctx.fillRect(0, 0, 512, 512);
+
+      ctx.fillStyle = secondaryHex;
+      for (let i = 0; i < 400; i++) {
+        ctx.globalAlpha = 0.04 + Math.random() * 0.05;
+        const x = Math.random() * 512;
+        const w = 2 + Math.random() * 8;
+        ctx.fillRect(x, 0, w, 512);
+      }
+      
+      const texture = new THREE.CanvasTexture(c);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(2, 2);
+      return texture;
+    }
+
+    const matPalettes = {
+      walnut: {
+        body: new THREE.MeshPhysicalMaterial({
+          map: generateWoodTexture('#4a2f1d', '#2b1a0e'),
+          roughness: 0.35, clearcoat: 0.15, metalness: 0.05
+        }),
+        door: new THREE.MeshPhysicalMaterial({
+          map: generateWoodTexture('#573823', '#2d1c10'),
+          roughness: 0.3, clearcoat: 0.3
+        })
+      },
+      oak: {
+        body: new THREE.MeshPhysicalMaterial({
+          map: generateWoodTexture('#d7b68a', '#b99564'),
+          roughness: 0.45, clearcoat: 0.1
+        }),
+        door: new THREE.MeshPhysicalMaterial({
+          map: generateWoodTexture('#e2c59d', '#bf9e71'),
+          roughness: 0.4, clearcoat: 0.15
+        })
+      },
+      anthracite: {
+        body: new THREE.MeshStandardMaterial({ color: 0x1e222b, roughness: 0.6 }),
+        door: new THREE.MeshStandardMaterial({ color: 0x2b303c, roughness: 0.4, metalness: 0.1 })
+      },
+      white: {
+        body: new THREE.MeshStandardMaterial({ color: 0xededed, roughness: 0.5 }),
+        door: new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.15, clearcoat: 0.8 })
+      }
+    };
+
+    const metalHandleMat = new THREE.MeshStandardMaterial({
+      color: 0x1a1a1a, metalness: 0.9, roughness: 0.2
+    });
+    const dvpBackMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9 });
+    const edgeOutlineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.35 });
+
+    function init3DStudio() {
+      const container = document.getElementById('three-canvas-container');
+      scene = new THREE.Scene();
+
+      camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 10, 15000);
+      camera.position.set(2600, 2100, 3200);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2 + 0.05;
+
+      // Studiya Yoritish Tizimi
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+      scene.add(ambientLight);
+
+      const mainLight = new THREE.DirectionalLight(0xffffff, 0.9);
+      mainLight.position.set(2500, 4000, 3000);
+      mainLight.castShadow = true;
+      mainLight.shadow.mapSize.width = 2048;
+      mainLight.shadow.mapSize.height = 2048;
+      mainLight.shadow.camera.near = 500;
+      mainLight.shadow.camera.far = 10000;
+      mainLight.shadow.bias = -0.0005;
+      const d = 2500;
+      mainLight.shadow.camera.left = -d;
+      mainLight.shadow.camera.right = d;
+      mainLight.shadow.camera.top = d;
+      mainLight.shadow.camera.bottom = -d;
+      scene.add(mainLight);
+
+      const fillLight = new THREE.DirectionalLight(0x88ccff, 0.35);
+      fillLight.position.set(-2500, 2000, -2000);
+      scene.add(fillLight);
+
+      // Zamin (Contact Shadow Floor)
+      const floorGeo = new THREE.PlaneGeometry(6000, 6000);
+      const floorMat = new THREE.ShadowMaterial({ opacity: 0.35 });
+      const floor = new THREE.Mesh(floorGeo, floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = 0;
+      floor.receiveShadow = true;
+      scene.add(floor);
+
+      const grid = new THREE.GridHelper(3000, 30, 0x00f2fe, 0x1f2638);
+      grid.position.y = 1;
+      scene.add(grid);
+
+      cabinetGroup = new THREE.Group();
+      scene.add(cabinetGroup);
+
+      renderCabinet();
+      animate();
+      window.addEventListener('resize', onResize);
+    }
+
+    function createPart(w, h, d, x, y, z, mat, castShadow = true) {
+      const geo = new THREE.BoxGeometry(w, h, d);
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(x, y, z);
+      mesh.castShadow = castShadow;
+      mesh.receiveShadow = true;
+
+      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo), edgeOutlineMat);
+      mesh.add(edges);
+      return mesh;
+    }
+
+    function renderCabinet() {
+      while(cabinetGroup.children.length > 0) { 
+        cabinetGroup.remove(cabinetGroup.children[0]); 
+      }
+      doorMeshes = [];
+      drawerMeshes = [];
+
+      const H = parseFloat(document.getElementById('inp_h').value) || 2200;
+      const W = parseFloat(document.getElementById('inp_w').value) || 1200;
+      const D = parseFloat(document.getElementById('inp_d').value) || 580;
+      const tsokol = parseFloat(document.getElementById('inp_tsokol').value) || 0;
+      const sections = parseInt(document.getElementById('inp_sections').value) || 1;
+      const shelves = parseInt(document.getElementById('inp_shelves').value) || 0;
+      const drawers = parseInt(document.getElementById('inp_drawers').value) || 0;
+      const doors = document.getElementById('inp_doors').value;
+      const matKey = document.getElementById('inp_material').value;
+
+      const curMat = matPalettes[matKey] || matPalettes.walnut;
+      const bodyH = H - tsokol;
+      const innerW = W - 2 * T;
+      const innerH = bodyH - 2 * T;
+      const baseY = tsokol;
+
+      // Tsokol (Pastki poydevor)
+      if (tsokol > 0) {
+        cabinetGroup.add(createPart(innerW, tsokol, T, 0, tsokol / 2, D / 2 - 35, curMat.body));
+        cabinetGroup.add(createPart(innerW, tsokol, T, 0, tsokol / 2, -D / 2 + 35, curMat.body));
+      }
+
+      // Korpus devorlari
+      cabinetGroup.add(createPart(T, bodyH, D, -W/2 + T/2, baseY + bodyH/2, 0, curMat.body));
+      cabinetGroup.add(createPart(T, bodyH, D, W/2 - T/2, baseY + bodyH/2, 0, curMat.body));
+      cabinetGroup.add(createPart(innerW, T, D, 0, baseY + bodyH - T/2, 0, curMat.body));
+      cabinetGroup.add(createPart(innerW, T, D, 0, baseY + T/2, 0, curMat.body));
+
+      // Orqa devor (DVP)
+      cabinetGroup.add(createPart(W - 4, bodyH - 4, 3.2, 0, baseY + bodyH/2, -D/2 + 1.6, dvpBackMat, false));
+
+      // Bo'linmalar (Peregorodkalar)
+      const colWidth = (innerW - (sections - 1) * T) / sections;
+      for (let i = 1; i < sections; i++) {
+        const posX = -innerW/2 + i * colWidth + (i - 0.5) * T;
+        cabinetGroup.add(createPart(T, innerH, D - 15, posX, baseY + T + innerH/2, 0, curMat.body));
+      }
+
+      // Polkalar
+      if (shelves > 0) {
+        const shelfPerSec = Math.floor(shelves / sections);
+        for (let s = 0; s < sections; s++) {
+          const secCenterX = -innerW/2 + s * (colWidth + T) + colWidth/2;
+          const shelfGap = innerH / (shelfPerSec + 1);
+          for (let k = 1; k <= shelfPerSec; k++) {
+            cabinetGroup.add(createPart(colWidth - 2, T, D - 20, secCenterX, baseY + T + k * shelfGap, 0, curMat.body));
+          }
+        }
+      }
+
+      // Yashiklar (Tortmalar)
+      if (drawers > 0) {
+        const dH = 160;
+        for (let d = 0; d < drawers; d++) {
+          const drawerGroup = new THREE.Group();
+          const dY = baseY + T + d * (dH + 8) + dH / 2;
+          const secCenterX = -innerW/2 + colWidth/2;
+
+          const drawerBody = createPart(colWidth - 10, dH - 6, D - 50, 0, 0, 0, curMat.body);
+          const handle = createPart(140, 14, 18, 0, 0, (D - 50)/2 + 9, metalHandleMat);
+          
+          drawerGroup.position.set(secCenterX, dY, 0);
+          drawerGroup.add(drawerBody);
+          drawerGroup.add(handle);
+          cabinetGroup.add(drawerGroup);
+          drawerMeshes.push(drawerGroup);
+        }
+      }
+
+      // Fasad eshiklar va metall tutqichlar (Ochilish sharniri bilan)
+      if (doors === 'hinged') {
+        const doorW = (W - 6) / sections;
+        for (let i = 0; i < sections; i++) {
+          const pivotGroup = new THREE.Group();
+          const isLeft = i === 0;
+          const hingeX = isLeft ? (-W/2 + i * doorW) : (-W/2 + (i + 1) * doorW);
+          const hingeZ = D/2 + T/2;
+
+          pivotGroup.position.set(hingeX, baseY + bodyH/2, hingeZ);
+
+          const doorMesh = createPart(doorW - 3, bodyH - 4, T, isLeft ? (doorW/2) : (-doorW/2), 0, 0, curMat.door);
+          const handle = createPart(16, 180, 24, isLeft ? (doorW - 40) : (-doorW + 40), 0, T/2 + 12, metalHandleMat);
+
+          pivotGroup.add(doorMesh);
+          pivotGroup.add(handle);
+          cabinetGroup.add(pivotGroup);
+
+          doorMeshes.push({ group: pivotGroup, isLeft: isLeft });
+        }
+      }
+
+      controls.target.set(0, H/2, 0);
+      updateTables();
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Eshiklar ochilish silliq animatsiyasi
+      currentDoorRot = THREE.MathUtils.lerp(currentDoorRot, targetDoorRot, 0.08);
+      doorMeshes.forEach(d => {
+        d.group.rotation.y = d.isLeft ? -currentDoorRot : currentDoorRot;
+      });
+
+      // Tortmalar chiqish silliq animatsiyasi
+      currentDrawerOffset = THREE.MathUtils.lerp(currentDrawerOffset, targetDrawerOffset, 0.08);
+      drawerMeshes.forEach(dw => {
+        dw.position.z = currentDrawerOffset;
+      });
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    function updateTables() {
+      const H = parseFloat(document.getElementById('inp_h').value) || 2200;
+      const W = parseFloat(document.getElementById('inp_w').value) || 1200;
+      const D = parseFloat(document.getElementById('inp_d').value) || 580;
+      const tsokol = parseFloat(document.getElementById('inp_tsokol').value) || 0;
+      const sections = parseInt(document.getElementById('inp_sections').value) || 1;
+      const shelves = parseInt(document.getElementById('inp_shelves').value) || 0;
+      const drawers = parseInt(document.getElementById('inp_drawers').value) || 0;
+      const doors = document.getElementById('inp_doors').value;
+
+      const bodyH = H - tsokol;
+      const innerW = W - 2 * T;
+      const innerH = bodyH - 2 * T;
+      const colWidth = Math.round((innerW - (sections - 1) * T) / sections);
+
+      const parts = [
+        { name: "Yon devor (Tik)", len: bodyH, wid: D, qty: 2, mat: "LDSP 16mm", edge: "2mm (Oldi), 0.4mm (Qolgan)" },
+        { name: "Ustki qopqoq (Tom)", len: innerW, wid: D, qty: 1, mat: "LDSP 16mm", edge: "2mm (Oldi), 0.4mm (Yon)" },
+        { name: "Pastki taglik", len: innerW, wid: D, qty: 1, mat: "LDSP 16mm", edge: "2mm (Oldi), 0.4mm (Yon)" }
+      ];
+
+      if (tsokol > 0) parts.push({ name: "Tsokol plankasi", len: innerW, wid: tsokol, qty: 2, mat: "LDSP 16mm", edge: "0.4mm (1T)" });
+      if (sections > 1) parts.push({ name: "Peregorodka", len: innerH, wid: D - 15, qty: sections - 1, mat: "LDSP 16mm", edge: "2mm (Oldi)" });
+      if (shelves > 0) parts.push({ name: "Polka", len: colWidth - 2, wid: D - 20, qty: shelves, mat: "LDSP 16mm", edge: "2mm (Oldi)" });
+
+      if (drawers > 0) {
+        parts.push({ name: "Yashik fasadi", len: colWidth - 6, wid: 170, qty: drawers, mat: "LDSP/MDF", edge: "2mm (4T)" });
+        parts.push({ name: "Yashik yonlari", len: D - 50, wid: 140, qty: drawers * 2, mat: "LDSP 16mm", edge: "0.4mm (2T)" });
+        parts.push({ name: "Yashik old/orqa", len: colWidth - 62, wid: 140, qty: drawers * 2, mat: "LDSP 16mm", edge: "0.4mm (2T)" });
+        parts.push({ name: "Yashik tubi", len: D - 50, wid: colWidth - 32, qty: drawers, mat: "DVP 3mm", edge: "-" });
+      }
+
+      if (doors === 'hinged') {
+        const doorW = Math.round((W - 6) / sections);
+        parts.push({ name: "Fasad eshik", len: bodyH - 4, wid: doorW - 3, qty: sections, mat: "MDF 16mm", edge: "2mm (4T)" });
+      }
+      parts.push({ name: "Orqa devor (DVP)", len: bodyH - 4, wid: W - 4, qty: 1, mat: "DVP 3mm", edge: "-" });
+
+      const pTbody = document.querySelector("#table_parts tbody");
+      pTbody.innerHTML = "";
+      parts.forEach(p => {
+        pTbody.innerHTML += `<tr><td>${p.name}</td><td>${p.len}</td><td>${p.wid}</td><td>${p.qty}</td><td>${p.mat}</td><td>${p.edge}</td></tr>`;
+      });
+
+      const hardware = [
+        { name: "Konfirmat (Yevrovint 7x50)", qty: parts.length * 4, unit: "dona", note: "Karkas yig'ish" },
+        { name: "Minifiks (Rastiks)", qty: shelves * 4, unit: "komplekt", note: "Polkalar fiksatsiyasi" },
+        { name: "DVP Samorezi (3.5x16)", qty: 50, unit: "dona", note: "Orqa fon mustahkamlash" }
+      ];
+
+      if (doors === 'hinged') {
+        hardware.push({ name: "Petlya (Sharnir)", qty: sections * 4, unit: "dona", note: "Fasadlar uchun" });
+        hardware.push({ name: "Modern Metal Ruchka", qty: sections + drawers, unit: "dona", note: "Tutqichlar" });
+      }
+      if (drawers > 0) hardware.push({ name: "Teleskop Napravlyayushchiy", qty: drawers, unit: "komplekt", note: "Yashiklar relsi" });
+
+      const hTbody = document.querySelector("#table_hardware tbody");
+      hTbody.innerHTML = "";
+      hardware.forEach(h => {
+        hTbody.innerHTML += `<tr><td>${h.name}</td><td>${h.qty}</td><td>${h.unit}</td><td>${h.note}</td></tr>`;
+      });
+
+      window.currentPartsData = parts;
+    }
+
+    function showTab(id) {
+      document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab_p').style.display = id === 'tab_p' ? 'block' : 'none';
+      document.getElementById('tab_h').style.display = id === 'tab_h' ? 'block' : 'none';
+      event.target.classList.add('active');
+    }
+
+    function onResize() {
+      const container = document.getElementById('three-canvas-container');
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      init3DStudio();
+
+      document.getElementById('btn_render').addEventListener('click', renderCabinet);
+
+      // Eshik ochish tugmasi
+      document.getElementById('btn_toggle_door').addEventListener('click', (e) => {
+        isDoorsOpen = !isDoorsOpen;
+        targetDoorRot = isDoorsOpen ? Math.PI / 1.7 : 0;
+        e.target.classList.toggle('active', isDoorsOpen);
+      });
+
+      // Tortma ochish tugmasi
+      document.getElementById('btn_toggle_drawer').addEventListener('click', (e) => {
+        isDrawersOpen = !isDrawersOpen;
+        targetDrawerOffset = isDrawersOpen ? 320 : 0;
+        e.target.classList.toggle('active', isDrawersOpen);
+      });
+
+      // X-Ray (Rentgen)
+      document.getElementById('btn_xray').addEventListener('click', (e) => {
+        isXray = !isXray;
+        cabinetGroup.traverse(child => {
+          if (child.isMesh && child.material) {
+            child.material.transparent = isXray;
+            child.material.opacity = isXray ? 0.35 : 1.0;
+          }
+        });
+        e.target.classList.toggle('active', isXray);
+      });
+
+      // Reset kamera
+      document.getElementById('btn_reset_cam').addEventListener('click', () => {
+        const H = parseFloat(document.getElementById('inp_h').value) || 2200;
+        camera.position.set(2600, 2100, 3200);
+        controls.target.set(0, H/2, 0);
+      });
+
+      // 2D Place ga eksport
+      document.getElementById('btn_export_2dplace').addEventListener('click', () => {
+        const log = document.getElementById('export-log');
+        log.innerText = "2D Place formatiga o'tkazilmoqda...";
+        log.style.color = "var(--accent)";
+
+        fetch('/api/export-2dplace', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            filename: 'Mebel360_3D_Raskroy.txt',
+            parts: (window.currentPartsData || []).map(p => ({
+              name: p.name,
+              length: p.length ?? p.len ?? 0,
+              width: p.width ?? p.wid ?? 0,
+              qty: p.qty ?? 1,
+              material: p.material ?? p.mat ?? 'LDSP 16mm',
+              edge: p.edge ?? '-'
+            }))
+          })
+        })
+        .then(r => r.json())
+        .then(res => {
+          if (res.success) {
+            log.innerText = "✓ " + res.message;
+            log.style.color = "var(--accent-green)";
+          } else {
+            log.innerText = "Xatolik: " + res.error;
+            log.style.color = "#ff4757";
+          }
+        })
+        .catch(() => {
+          log.innerText = "Serverga ulanib bo'lmadi!";
+          log.style.color = "#ff4757";
+        });
+      });
+    });
+  </script>
+</body>
+</html>

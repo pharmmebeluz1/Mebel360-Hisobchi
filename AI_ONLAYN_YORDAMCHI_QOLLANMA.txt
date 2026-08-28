@@ -1,0 +1,23 @@
+MEBEL360° — SUN'IY INTELLEKT YORDAMCHI
+
+1. ZIP faylni albatta to'liq papkaga chiqaring.
+2. start.bat faylini ikki marta bosing.
+3. Brauzerda Mebel360 ochilgach, o'ng pastdagi “Mebel360 AI” tugmasini bosing.
+4. “Onlayn AI sozlamasi” tugmasini bosing.
+5. OpenAI API kalitini kiriting, modelni tanlang va “Saqlash”ni bosing.
+6. “Onlayn AI tayyor” yashil yozuvi chiqqach savol bering.
+
+MISOL SAVOLLAR
+- Hozirgi shkaf konstruktsiyasida xato bormi?
+- Petla polkaga tegib qolmaydimi?
+- Kroy chiqindisini qanday kamaytirish mumkin?
+- Detallar jadvalida takrorlangan polkalar bormi?
+- 2200 × 1900 × 600 shkaf uchun mustahkam konstruktsiya tavsiya qil.
+- Mijozga tushunarli narx izohini yoz.
+
+MUHIM
+- Onlayn AI ishlashi uchun internet va OpenAI API kaliti kerak.
+- API kaliti bo'lmasa, ichki aqlli yordamchi ishlaydi.
+- index.html faylini yolg'iz ochganda onlayn AI ishlamaydi; start.bat orqali oching.
+- ai_config.json faylida kalit saqlanishi mumkin. Uni boshqa odamga yubormang.
+- Ishlab chiqarishdan oldin petla, tortma va boshqa furnituraning aynan o'z shabloni/pasporti bilan tekshiring.
