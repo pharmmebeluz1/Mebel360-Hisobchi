@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3f8ff">
+<title>Mebel360° — Smart chizma va hisob</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a1120;
+  --bg-2:#0d1830;
+  --panel:#121f3a;
+  --panel-2:#16274a;
+  --panel-soft:#1b2e56;
+  --text:#eef2fb;
+  --muted:#8fa0c7;
+  --line:rgba(180,200,240,.14);
+  --line-strong:rgba(180,200,240,.26);
+  --copper:#f2994a;
+  --copper-2:#ffc98a;
+  --violet:#8b7cff;
+  --teal:#3fc9b3;
+  --red:#ff6f70;
+  --white:#fff;
+  --shadow:0 22px 70px rgba(2,6,18,.45);
+  --radius:22px;
+  --radius-sm:15px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 6% 0%, rgba(242,153,74,.13), transparent 30%),
+    radial-gradient(circle at 100% 15%, rgba(139,124,255,.13), transparent 28%),
+    linear-gradient(180deg, var(--bg) 0%, #0b1526 55%, #0a1120 100%);
+  color:var(--text);
+  font-family:'Inter',system-ui,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:92px;
+}
+button,input,select{font:inherit}
+button{touch-action:manipulation}
+.mono{font-family:Consolas,"Courier New",monospace}
+.display{font-family:'Space Grotesk',system-ui,sans-serif}
+.shell{width:min(1240px,100%);margin:0 auto;padding:0 18px}
+
+.topbar{
+  position:sticky;top:0;z-index:30;
+  border-bottom:1px solid var(--line);
+  background:rgba(10,17,32,.8);
+  backdrop-filter:blur(18px);
+}
+.topbar-inner{height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.logo{
+  width:43px;height:43px;border-radius:14px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--copper),var(--copper-2));
+  color:#3a1c00;font-weight:700;font-size:15px;font-family:'Space Grotesk',sans-serif;
+  box-shadow:0 10px 25px rgba(242,153,74,.25);
+}
+.brand-copy{min-width:0}
+.brand-title{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+.brand-sub{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+.top-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{
+  min-width:42px;height:42px;padding:0 13px;border-radius:13px;
+  border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;
+}
+.icon-btn:hover{border-color:rgba(242,153,74,.5);background:rgba(242,153,74,.08)}
+.icon-btn svg{width:18px;height:18px}
+.icon-btn .btn-label{font-size:12px;font-weight:700}
+
+.hero{padding:30px 0 20px}
+.hero-card{
+  position:relative;overflow:hidden;
+  border:1px solid var(--line);
+  background:linear-gradient(135deg,rgba(22,39,74,.96),rgba(11,21,42,.94));
+  border-radius:28px;padding:27px;
+  box-shadow:var(--shadow);
+}
+.hero-card:before{
+  content:"";position:absolute;width:320px;height:320px;border-radius:50%;right:-120px;top:-160px;
+  background:radial-gradient(circle,rgba(242,153,74,.22),transparent 68%);
+}
+.hero-card:after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.10;
+  background-image:linear-gradient(rgba(180,200,240,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(180,200,240,.35) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+.hero-stamp{position:absolute;right:26px;bottom:18px;z-index:1;font-family:Consolas,monospace;font-size:10px;letter-spacing:.16em;color:rgba(180,200,240,.4);transform:rotate(-4deg);border:1px solid rgba(180,200,240,.3);border-radius:8px;padding:5px 9px;text-transform:uppercase}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.25fr .75fr;gap:24px;align-items:end}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--copper);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--copper);box-shadow:0 0 0 5px rgba(242,153,74,.14)}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(27px,5vw,47px);line-height:1.05;letter-spacing:-.03em;margin:13px 0 12px;max-width:720px;font-weight:600}
+.hero p{margin:0;color:var(--muted);font-size:14px;line-height:1.7;max-width:700px}
+.hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.stat{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:16px;padding:14px}
+.stat strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:18px;color:var(--white);letter-spacing:-.02em}
+.stat span{display:block;margin-top:3px;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+
+.workspace{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(350px,.92fr);gap:18px;align-items:start}
+.stack{display:grid;gap:18px}
+.card{
+  border:1px solid var(--line);background:linear-gradient(180deg,rgba(18,31,58,.96),rgba(13,23,44,.96));
+  border-radius:var(--radius);padding:20px;box-shadow:0 14px 38px rgba(2,6,18,.25)
+}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:17px}
+.card-kicker{font-size:10px;color:var(--copper);font-weight:700;letter-spacing:.13em;text-transform:uppercase;margin-bottom:5px}
+.card-title{margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;line-height:1.25;letter-spacing:-.01em;font-weight:600}
+.card-help{font-size:11px;color:var(--muted);line-height:1.5;margin-top:4px}
+.step{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:rgba(242,153,74,.12);color:var(--copper);font-size:12px;font-weight:700;flex:0 0 auto;font-family:'Space Grotesk',sans-serif}
+
+.type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.type-btn{
+  position:relative;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--muted);
+  min-height:88px;border-radius:16px;padding:12px 8px;cursor:pointer;text-align:center;
+  transition:.18s ease;
+}
+.type-btn:hover{transform:translateY(-2px);border-color:rgba(242,153,74,.4)}
+.type-btn.active{background:linear-gradient(180deg,rgba(242,153,74,.18),rgba(242,153,74,.06));border-color:rgba(245,102,35,.72);color:var(--white);box-shadow:inset 0 0 0 1px rgba(242,153,74,.14)}
+.type-icon{width:34px;height:34px;margin:0 auto 8px;display:grid;place-items:center;color:var(--copper)}
+.type-icon svg{width:32px;height:32px}
+.type-btn span{display:block;font-size:11px;font-weight:700;line-height:1.25}
+.type-btn small{display:block;font-size:9px;color:var(--muted);margin-top:3px}
+
+.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.form-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.form-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.field{min-width:0}
+.field.wide{grid-column:1/-1}
+.field label{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin:0 0 7px}
+.field label em{font-style:normal;color:var(--copper);text-transform:none;letter-spacing:0;font-size:9px}
+.input-wrap{position:relative}
+.input-wrap input,.field select{
+  width:100%;height:45px;border-radius:13px;border:1px solid var(--line);background:rgba(6,11,22,.6);color:var(--text);
+  padding:0 44px 0 13px;outline:none;font-family:Consolas,"Courier New",monospace;font-size:13px;
+}
+.input-wrap input.text-field{font-family:'Inter',system-ui,sans-serif;padding-right:13px}
+.field select{padding-right:12px;font-family:'Inter',Arial,sans-serif}
+.input-wrap input:focus,.field select:focus{border-color:var(--copper);box-shadow:0 0 0 3px rgba(242,153,74,.12)}
+.input-wrap input:invalid,.input-wrap input.invalid{border-color:var(--red)}
+.field-error{font-size:9px;color:var(--red);margin-top:5px;display:none}
+.field-error.show{display:block}
+.input-wrap span{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--muted);pointer-events:none}
+.subsection{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line)}
+.subsection-title{font-size:11px;color:var(--white);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.subsection-title:before{content:"";width:18px;height:2px;background:var(--violet);border-radius:10px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 13px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}
+.toggle-copy strong{display:block;font-size:12px}
+.toggle-copy span{display:block;font-size:10px;color:var(--muted);margin-top:3px;line-height:1.4}
+.switch{position:relative;width:46px;height:26px;flex:0 0 auto}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;border-radius:30px;background:#26314f;cursor:pointer;transition:.2s}
+.slider:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;border-radius:50%;background:#fff;transition:.2s}
+.switch input:checked + .slider{background:var(--copper)}
+.switch input:checked + .slider:before{transform:translateX(20px)}
+
+.material-list{display:grid;gap:10px}
+.material-item{border:1px solid var(--line);border-radius:16px;padding:13px;background:rgba(255,255,255,.022)}
+.material-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.material-name{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700}
+.material-dot{width:9px;height:9px;border-radius:50%;background:var(--copper);box-shadow:0 0 0 4px rgba(242,153,74,.12)}
+.material-item:nth-child(2) .material-dot{background:var(--violet);box-shadow:0 0 0 4px rgba(139,124,255,.12)}
+.material-item:nth-child(3) .material-dot{background:var(--teal);box-shadow:0 0 0 4px rgba(63,201,179,.12)}
+.material-meta{font-size:9px;color:var(--muted)}
+.material-fields{display:grid;grid-template-columns:1.25fr .8fr .8fr;gap:8px}
+.material-fields.edge{grid-template-columns:1fr 1fr}
+.material-fields.decor{grid-template-columns:1fr;margin-top:8px}
+.mini-field label{display:block;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.mini-field input,.mini-field select{width:100%;height:38px;border:1px solid var(--line);border-radius:10px;background:rgba(6,11,22,.6);color:var(--text);padding:0 9px;font-family:Consolas,"Courier New",monospace;font-size:11px;outline:none}
+.mini-field select{font-family:'Inter',sans-serif;font-size:11px}
+.mini-field input:focus,.mini-field select:focus{border-color:var(--copper)}
+
+.preview-card{padding:0;overflow:hidden;position:sticky;top:88px}
+.preview-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.preview-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700}
+.live-pill{display:inline-flex;align-items:center;gap:7px;font-size:9px;color:var(--copper);text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+.live-pill i{width:7px;height:7px;border-radius:50%;background:var(--copper);box-shadow:0 0 0 4px rgba(242,153,74,.12)}
+.canvas-wrap{position:relative;background:#070d1b;padding:14px;min-height:315px;overflow:hidden}
+.canvas-wrap:before{content:"";position:absolute;inset:0;opacity:.16;background-image:linear-gradient(rgba(242,153,74,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(242,153,74,.2) 1px,transparent 1px);background-size:24px 24px}
+.canvas-label{position:absolute;z-index:2;left:18px;top:15px;font-family:Consolas,"Courier New",monospace;font-size:9px;color:var(--copper);letter-spacing:.1em;text-transform:uppercase}
+canvas{position:relative;z-index:1;width:100%;height:285px;display:block}
+.preview-summary{padding:18px 20px;background:linear-gradient(180deg,rgba(21,34,64,.96),rgba(14,24,46,.96))}
+.total-line{display:flex;justify-content:space-between;align-items:flex-end;gap:15px}
+.total-label span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em}
+.total-label strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:13px;margin-top:4px}
+.total-amount{text-align:right;font-family:Consolas,"Courier New",monospace;font-size:25px;font-weight:600;color:var(--copper);letter-spacing:-.03em}
+.total-amount small{font-size:10px;color:var(--muted);letter-spacing:0}
+.quick-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:15px}
+.metric{padding:10px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.025);text-align:center}
+.metric strong{display:block;font-family:Consolas,"Courier New",monospace;font-size:12px}
+.metric span{display:block;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
+
+.breakdown{display:grid;gap:0;margin-top:3px}
+.cost-row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:12px 0;border-bottom:1px dashed var(--line)}
+.cost-row:last-child{border-bottom:0}
+.cost-name{font-size:12px;color:var(--muted)}
+.cost-name small{display:block;font-size:9px;color:#5f7092;margin-top:3px}
+.cost-value{text-align:right;font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--white)}
+.cost-value.negative{color:var(--copper)}
+.formula-box{margin-top:13px;border:1px solid rgba(242,153,74,.22);background:rgba(59,130,246,.08);border-radius:14px;padding:12px;font-size:10px;line-height:1.55;color:var(--muted)}
+.formula-box strong{color:var(--copper)}
+
+.action-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:9px;margin-top:16px}
+.primary-btn,.secondary-btn{
+  min-height:47px;border-radius:14px;border:1px solid transparent;padding:0 14px;cursor:pointer;font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px
+}
+.primary-btn{background:linear-gradient(135deg,var(--copper),var(--copper-2));color:#3a1c00;box-shadow:0 10px 25px rgba(242,153,74,.2)}
+.secondary-btn{background:rgba(255,255,255,.035);border-color:var(--line);color:var(--text)}
+.secondary-btn:hover{border-color:var(--line-strong)}
+.primary-btn svg,.secondary-btn svg{width:16px;height:16px}
+
+.notice{display:flex;gap:10px;margin-top:14px;border:1px solid rgba(139,124,255,.22);background:rgba(139,124,255,.08);padding:12px;border-radius:14px;color:#c7c3f5;font-size:10px;line-height:1.55}
+.notice svg{width:17px;height:17px;color:var(--violet);flex:0 0 auto;margin-top:1px}
+
+.bottom-bar{position:fixed;left:0;right:0;bottom:0;z-index:35;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(10,17,32,.88);backdrop-filter:blur(18px);border-top:1px solid var(--line)}
+.bottom-inner{width:min(1240px,100%);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bottom-total span{display:block;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}
+.bottom-total strong{display:block;font-family:Consolas,"Courier New",monospace;font-size:17px;color:var(--copper);margin-top:2px}
+.bottom-cta{height:48px;border:0;border-radius:15px;padding:0 22px;background:linear-gradient(135deg,var(--copper),var(--copper-2));color:#3a1c00;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 10px 28px rgba(242,153,74,.2)}
+
+.modal-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(3,6,14,.72);backdrop-filter:blur(8px);padding:18px;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{width:min(560px,100%);max-height:90vh;overflow:auto;border:1px solid var(--line-strong);border-radius:24px;background:#101c37;padding:21px;box-shadow:var(--shadow)}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:17px}
+.modal h3{margin:0;font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600}
+.modal p{font-size:11px;line-height:1.65;color:var(--muted)}
+.close{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);cursor:pointer}
+.summary-box{border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.18);padding:14px;margin:15px 0;font-size:11px;line-height:1.65;color:var(--muted);white-space:pre-line}
+.toast{position:fixed;z-index:200;left:50%;bottom:92px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#fff2e4;color:#3a1c00;border-radius:12px;padding:10px 14px;font-size:11px;font-weight:700;transition:.2s;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.hidden{display:none!important}
+
+.share-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0}
+.share-btn{min-height:44px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--text);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.share-btn svg{width:16px;height:16px}
+.share-btn.whatsapp:hover{border-color:rgba(63,201,179,.5);background:rgba(63,201,179,.08)}
+.share-btn.telegram:hover{border-color:rgba(139,124,255,.5);background:rgba(139,124,255,.08)}
+
+.project-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin-bottom:8px;background:rgba(255,255,255,.02)}
+.project-info strong{display:block;font-size:12px}
+.project-info span{display:block;font-size:9px;color:var(--muted);margin-top:2px}
+.project-actions{display:flex;gap:6px;flex:0 0 auto}
+.mini-btn{height:32px;padding:0 11px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);font-size:10px;font-weight:700;cursor:pointer}
+.mini-btn:hover{border-color:rgba(242,153,74,.5)}
+.mini-btn.danger:hover{border-color:rgba(255,111,112,.5);color:var(--red)}
+.empty-note{font-size:11px;color:var(--muted);padding:16px 0;text-align:center}
+
+@media(max-width:980px){
+  .workspace{grid-template-columns:1fr}
+  .preview-card{position:relative;top:auto}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:700px){
+  .shell{padding:0 12px}
+  .topbar-inner{height:64px}
+  .brand-sub{display:none}
+  .top-actions .btn-label{display:none}
+  .hero{padding:18px 0 14px}
+  .hero-card{padding:20px;border-radius:22px}
+  .hero h1{font-size:29px}
+  .hero p{font-size:12px}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .card{padding:16px;border-radius:19px}
+  .type-grid{grid-template-columns:repeat(4,1fr);gap:7px}
+  .type-btn{min-height:78px;padding:10px 4px}
+  .type-icon{width:27px;height:27px;margin-bottom:7px}.type-icon svg{width:26px;height:26px}
+  .type-btn span{font-size:9px}.type-btn small{display:none}
+  .form-grid,.form-grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .form-grid .field:last-child:nth-child(odd){grid-column:1/-1}
+  .material-fields{grid-template-columns:1.2fr .8fr .8fr}
+  .action-grid{grid-template-columns:1fr 1fr}.action-grid .primary-btn{grid-column:1/-1}
+  .canvas-wrap{min-height:285px}canvas{height:255px}
+  .share-grid{grid-template-columns:1fr}
+}
+@media(max-width:430px){
+  .hero h1{font-size:25px}
+  .card-title{font-size:16px}
+  .type-grid{grid-template-columns:repeat(2,1fr)}
+  .type-btn{min-height:72px;display:flex;align-items:center;text-align:left;padding:10px}
+  .type-icon{margin:0 8px 0 0;flex:0 0 auto}
+  .form-grid.two,.material-fields,.material-fields.edge{grid-template-columns:1fr 1fr}
+  .material-fields .mini-field:first-child{grid-column:1/-1}
+  .quick-metrics{grid-template-columns:repeat(3,1fr)}
+  .bottom-cta{padding:0 15px}
+}
+
+/* ===== Mebel360° YORUG‘ STUDIO MAVZUSI ===== */
+:root{
+  --bg:#eef5ff;
+  --bg-2:#f8fbff;
+  --panel:#ffffff;
+  --panel-2:#f5f9ff;
+  --panel-soft:#eaf2ff;
+  --text:#17233f;
+  --muted:#65769a;
+  --line:rgba(47,83,151,.16);
+  --line-strong:rgba(47,83,151,.30);
+  --copper:#ff7a2f;
+  --copper-2:#ffd166;
+  --violet:#6d5dfc;
+  --teal:#0eb89b;
+  --red:#e5484d;
+  --white:#ffffff;
+  --shadow:0 22px 65px rgba(57,84,135,.15);
+}
+body{
+  background:
+    radial-gradient(circle at 6% 0%,rgba(255,193,111,.35),transparent 30%),
+    radial-gradient(circle at 100% 10%,rgba(116,151,255,.25),transparent 30%),
+    linear-gradient(180deg,#f9fcff 0%,#eef5ff 55%,#f7fbff 100%);
+}
+.topbar{
+  background:rgba(255,255,255,.88);
+  border-bottom-color:rgba(47,83,151,.14);
+  box-shadow:0 8px 28px rgba(57,84,135,.08);
+}
+.logo{
+  background:linear-gradient(135deg,#ff7a2f,#ffd166);
+  color:#512300;
+  box-shadow:0 10px 25px rgba(255,122,47,.25);
+}
+.icon-btn{
+  background:rgba(255,255,255,.80);
+  box-shadow:0 5px 16px rgba(57,84,135,.07);
+}
+.icon-btn:hover{background:#fff4e8;border-color:rgba(255,122,47,.5)}
+.hero-card{
+  border-color:rgba(47,83,151,.14);
+  background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(236,245,255,.97));
+  box-shadow:0 24px 70px rgba(57,84,135,.16);
+}
+.hero-card:before{background:radial-gradient(circle,rgba(255,166,87,.30),transparent 68%)}
+.hero-card:after{
+  opacity:.20;
+  background-image:linear-gradient(rgba(74,112,180,.20) 1px,transparent 1px),linear-gradient(90deg,rgba(74,112,180,.20) 1px,transparent 1px);
+}
+.hero-stamp{color:rgba(47,83,151,.46);border-color:rgba(47,83,151,.25)}
+.stat,.metric,.type-btn,.material-item,.toggle-row,.project-row,.secondary-btn,.share-btn{
+  background:rgba(255,255,255,.78);
+}
+.stat{box-shadow:0 8px 20px rgba(57,84,135,.06)}
+.stat strong{color:var(--text)}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.99),rgba(248,251,255,.99));
+  box-shadow:0 14px 42px rgba(57,84,135,.11);
+}
+.type-btn:hover{box-shadow:0 10px 24px rgba(57,84,135,.10)}
+.type-btn.active{
+  background:linear-gradient(180deg,rgba(255,177,100,.28),rgba(255,243,225,.80));
+  border-color:rgba(255,122,47,.65);
+  color:var(--text);
+  box-shadow:inset 0 0 0 1px rgba(255,122,47,.12),0 9px 22px rgba(255,122,47,.10);
+}
+.input-wrap input,.field select,.mini-field input,.mini-field select{
+  background:#f8fbff;
+  color:var(--text);
+  box-shadow:inset 0 1px 2px rgba(57,84,135,.04);
+}
+.input-wrap input:focus,.field select:focus,.mini-field input:focus,.mini-field select:focus{
+  background:#fff;
+}
+.slider{background:#cbd6e8}
+.preview-card{box-shadow:0 20px 55px rgba(57,84,135,.16)}
+.preview-head{background:#fff}
+.canvas-wrap{background:#eef6ff}
+.canvas-wrap:before{
+  opacity:.68;
+  background-image:linear-gradient(rgba(67,111,181,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(67,111,181,.13) 1px,transparent 1px);
+}
+.preview-summary{background:linear-gradient(180deg,#ffffff,#f2f7ff)}
+.total-amount,.bottom-total strong{color:#f56623}
+.cost-name small{color:#8797b5}
+.formula-box{background:#fff5e9;border-color:rgba(255,122,47,.28)}
+.primary-btn,.bottom-cta{
+  background:linear-gradient(135deg,#ff7a2f,#ffd166);
+  color:#512300;
+  box-shadow:0 10px 25px rgba(255,122,47,.22);
+}
+.primary-btn:hover,.bottom-cta:hover{filter:brightness(1.035);transform:translateY(-1px)}
+.notice{background:#f1efff;border-color:rgba(109,93,252,.25);color:#554c9d}
+.bottom-bar{
+  background:rgba(255,255,255,.91);
+  border-top-color:rgba(47,83,151,.15);
+  box-shadow:0 -8px 30px rgba(57,84,135,.09);
+}
+.modal-overlay{background:rgba(37,52,82,.42)}
+.modal{background:#ffffff;box-shadow:0 28px 80px rgba(37,52,82,.24)}
+.summary-box{background:#f6f9ff;color:var(--muted)}
+.close{background:#f7faff}
+.toast{background:#17233f;color:#fff7ef}
+.material-item:nth-child(2){background:linear-gradient(135deg,#fff,#f4f1ff)}
+.material-item:nth-child(3){background:linear-gradient(135deg,#fff,#ebfffb)}
+.live-pill,.canvas-label{color:#f56623}
+.empty-note{background:#f6f9ff;border-radius:13px}
+
+@media print{
+  .canvas-wrap{background:#eef6ff!important}
+}
+
+@media print{
+  body{background:#fff;color:#111;padding:0}
+  .topbar,.hero,.left-column,.bottom-bar,.action-grid,.notice{display:none!important}
+  .shell{width:100%;padding:0}
+  .workspace{display:block}
+  .preview-card{position:static;border:0;box-shadow:none;background:#fff}
+  .preview-head,.preview-summary,.card{background:#fff;color:#111;border-color:#ddd}
+  .canvas-wrap{background:#eef6ff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .cost-name,.card-help,.metric span,.total-label span{color:#555}
+  .cost-value,.total-label strong,.metric strong{color:#111}
+  .total-amount{color:#b5651d}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <div class="brand">
+      <div class="logo">M360</div>
+      <div class="brand-copy">
+        <div class="brand-title">Mebel360° Hisobchi</div>
+        <div class="brand-sub">Smart chizma · material · smeta</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="projectsBtn" title="Saqlangan loyihalar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span class="btn-label">Loyihalar</span>
+      </button>
+      <button class="icon-btn" id="saveBtn" title="Loyihani saqlash">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h12l2 2v16H5z"/><path d="M8 3v6h8V3M8 21v-8h8v8"/></svg><span class="btn-label">Saqlash</span>
+      </button>
+      <button class="icon-btn" id="resetBtn" title="Tozalash">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span class="btn-label">Yangilash</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="shell">
+    <div class="hero-card">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow"><i></i>Mebel360° yangi avlod moduli</div>
+          <h1>O‘lchamdan chizma, chizmadan aniqroq hisob.</h1>
+          <p>Mebel turini tanlang, o‘lcham va narxlarni kiriting. Tizim material sarfi, list soni, kromka, ish haqi, QQS va qo‘shimcha xarajatlarni bir joyda hisoblaydi.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><strong>8 ta</strong><span>Mebel turkumi</span></div>
+          <div class="stat"><strong>Jonli</strong><span>Chizma</span></div>
+          <div class="stat"><strong>Avto</strong><span>Smeta + QQS</span></div>
+          <div class="stat"><strong>Ko‘p</strong><span>Saqlangan loyiha</span></div>
+        </div>
+      </div>
+      <div class="hero-stamp">M360 · DRAFT No.02</div>
+    </div>
+  </div>
+</section>
+
+<main class="shell workspace">
+  <div class="stack left-column">
+    <section class="card">
+      <div class="card-head">
+        <div><div class="card-kicker">Birinchi bosqich</div><h2 class="card-title">Mebel turkumini tanlang</h2><div class="card-help">Tanlangan turkumga qarab ichki hisob formulasi o‘zgaradi.</div></div>
+        <div class="step">01</div>
+      </div>
+      <div class="type-grid" id="typeGrid"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <div><div class="card-kicker">Ikkinchi bosqich</div><h2 class="card-title">O‘lcham va ichki tuzilish</h2><div class="card-help">Asosiy o‘lchamlarni santimetrda kiriting.</div></div>
+        <div class="step">02</div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label for="w">Kenglik <em>sm</em></label><div class="input-wrap"><input id="w" type="number" min="20" max="1000" value="180"><span>sm</span></div></div>
+        <div class="field"><label for="h">Balandlik <em>sm</em></label><div class="input-wrap"><input id="h" type="number" min="20" max="500" value="210"><span>sm</span></div></div>
+        <div class="field"><label for="d">Chuqurlik <em>sm</em></label><div class="input-wrap"><input id="d" type="number" min="15" max="500" value="60"><span>sm</span></div></div>
+      </div>
+      <div class="subsection">
+        <div class="subsection-title">Ichki elementlar</div>
+        <div class="form-grid four" id="structureFields">
+          <div class="field" data-field="shelves"><label for="shelves">Polka soni</label><div class="input-wrap"><input id="shelves" type="number" min="0" max="50" value="4"><span>dona</span></div></div>
+          <div class="field" data-field="dividers"><label for="dividers">Tik bo‘luvchi</label><div class="input-wrap"><input id="dividers" type="number" min="0" max="20" value="1"><span>dona</span></div></div>
+          <div class="field" data-field="doors"><label for="doors">Eshik soni</label><div class="input-wrap"><input id="doors" type="number" min="0" max="20" value="3"><span>dona</span></div></div>
+          <div class="field" data-field="drawers"><label for="drawers">Tortma soni</label><div class="input-wrap"><input id="drawers" type="number" min="0" max="20" value="0"><span>dona</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <div><div class="card-kicker">Uchinchi bosqich</div><h2 class="card-title">Material va joriy narxlar</h2><div class="card-help">Siz aytgan LMDEF, LXDEF va kromka narxlari kiritilgan.</div></div>
+        <div class="step">03</div>
+      </div>
+      <div class="material-list">
+        <div class="material-item">
+          <div class="material-top"><div class="material-name"><i class="material-dot"></i>LMDEF asosiy list</div><div class="material-meta">Korpus va fasad</div></div>
+          <div class="material-fields">
+            <div class="mini-field"><label for="lmdefPrice">1 list narxi, so‘m</label><input id="lmdefPrice" type="number" value="556600" min="0"></div>
+            <div class="mini-field"><label for="lmdefLen">Uzunligi, sm</label><input id="lmdefLen" type="number" value="275" min="1"></div>
+            <div class="mini-field"><label for="lmdefWid">Eni, sm</label><input id="lmdefWid" type="number" value="183" min="1"></div>
+          </div>
+          <div class="material-fields decor">
+            <div class="mini-field"><label for="lmdefDecor">Dekor / rang</label>
+              <select id="lmdefDecor">
+                <option value="Oq (standart)">Oq (standart)</option>
+                <option value="Yog‘och naqshli">Yog‘och naqshli</option>
+                <option value="Bo‘yalgan rang">Bo‘yalgan rang</option>
+                <option value="Boshqa">Boshqa</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="material-item">
+          <div class="material-top"><div class="material-name"><i class="material-dot"></i>LXDEF orqa list</div><div class="material-meta">Orqa devor</div></div>
+          <div class="material-fields">
+            <div class="mini-field"><label for="hdfPrice">1 list narxi, so‘m</label><input id="hdfPrice" type="number" value="150000" min="0"></div>
+            <div class="mini-field"><label for="hdfLen">Uzunligi, sm</label><input id="hdfLen" type="number" value="280" min="1"></div>
+            <div class="mini-field"><label for="hdfWid">Eni, sm</label><input id="hdfWid" type="number" value="207" min="1"></div>
+          </div>
+        </div>
+        <div class="material-item">
+          <div class="material-top"><div class="material-name"><i class="material-dot"></i>Kromka</div><div class="material-meta">Ochiq qirralar</div></div>
+          <div class="material-fields edge">
+            <div class="mini-field"><label for="edgePrice">1 metr narxi, so‘m</label><input id="edgePrice" type="number" value="8000" min="0"></div>
+            <div class="mini-field"><label for="wastePct">Chiqindi, %</label><input id="wastePct" type="number" value="10" min="0" max="50"></div>
+          </div>
+          <div class="material-fields decor">
+            <div class="mini-field"><label for="edgeType">Kromka turi</label>
+              <select id="edgeType">
+                <option value="0.4mm">0.4 mm (yupqa)</option>
+                <option value="2mm">2 mm (standart)</option>
+                <option value="3D">3D / soft-touch</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="subsection">
+        <div class="toggle-row">
+          <div class="toggle-copy"><strong>To‘liq list xaridi bo‘yicha</strong><span>Listning bir qismi ishlatilsa ham to‘liq list narxi hisoblanadi.</span></div>
+          <label class="switch"><input type="checkbox" id="fullSheets" checked><span class="slider"></span></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <div><div class="card-kicker">To‘rtinchi bosqich</div><h2 class="card-title">Ish, xizmat, ustama va QQS</h2><div class="card-help">Bu bo‘lim orqali mijozga yaqinroq sotuv narxi chiqadi.</div></div>
+        <div class="step">04</div>
+      </div>
+      <div class="form-grid two">
+        <div class="field"><label for="laborPct">Ishchi kuchi <em>%</em></label><div class="input-wrap"><input id="laborPct" type="number" min="0" max="200" value="25"><span>%</span></div></div>
+        <div class="field"><label for="fittings">Furnitura <em>so‘m</em></label><div class="input-wrap"><input id="fittings" type="number" min="0" value="300000"><span>so‘m</span></div></div>
+        <div class="field"><label for="delivery">Yetkazish <em>so‘m</em></label><div class="input-wrap"><input id="delivery" type="number" min="0" value="0"><span>so‘m</span></div></div>
+        <div class="field"><label for="installation">O‘rnatish <em>so‘m</em></label><div class="input-wrap"><input id="installation" type="number" min="0" value="0"><span>so‘m</span></div></div>
+        <div class="field"><label for="markupPct">Korxona ustamasi <em>%</em></label><div class="input-wrap"><input id="markupPct" type="number" min="0" max="300" value="15"><span>%</span></div></div>
+        <div class="field"><label for="discountPct">Chegirma <em>%</em></label><div class="input-wrap"><input id="discountPct" type="number" min="0" max="100" value="0"><span>%</span></div></div>
+      </div>
+      <div class="subsection">
+        <div class="toggle-row">
+          <div class="toggle-copy"><strong>QQS qo‘shilsinmi</strong><span>Yakuniy narxga qo‘shimcha soliq stavkasi qo‘shiladi.</span></div>
+          <label class="switch"><input type="checkbox" id="vatEnabled"><span class="slider"></span></label>
+        </div>
+        <div class="form-grid two" style="margin-top:12px">
+          <div class="field"><label for="vatPct">QQS stavkasi <em>%</em></label><div class="input-wrap"><input id="vatPct" type="number" min="0" max="100" value="12"><span>%</span></div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="stack">
+    <section class="card preview-card">
+      <div class="preview-head"><div><div class="preview-title" id="previewName">Shkaf chizmasi</div><div class="card-help" id="previewDims">180 × 210 × 60 sm</div></div><div class="live-pill"><i></i>Jonli hisob</div></div>
+      <div class="canvas-wrap"><div class="canvas-label">FRONT / SXEMA</div><canvas id="draw"></canvas></div>
+      <div class="preview-summary">
+        <div class="total-line"><div class="total-label"><span>Mijozga taxminiy narx</span><strong id="typeLabel">Shkaf</strong></div><div class="total-amount" id="totalAmount">0 <small>so‘m</small></div></div>
+        <div class="quick-metrics">
+          <div class="metric"><strong id="metricSheets">0</strong><span>LMDEF list</span></div>
+          <div class="metric"><strong id="metricHdf">0</strong><span>LXDEF list</span></div>
+          <div class="metric"><strong id="metricEdge">0 m</strong><span>Kromka</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><div><div class="card-kicker">Hisob tafsiloti</div><h2 class="card-title">Xarajatlar tarkibi</h2></div><div class="step">₿</div></div>
+      <div class="breakdown">
+        <div class="cost-row"><div class="cost-name">LMDEF asosiy list<small id="lmdefMeta">—</small></div><div class="cost-value" id="lmdefCost">—</div></div>
+        <div class="cost-row"><div class="cost-name">LXDEF orqa list<small id="hdfMeta">—</small></div><div class="cost-value" id="hdfCost">—</div></div>
+        <div class="cost-row"><div class="cost-name">Kromka<small id="edgeMeta">—</small></div><div class="cost-value" id="edgeCost">—</div></div>
+        <div class="cost-row"><div class="cost-name">Furnitura va aksessuar</div><div class="cost-value" id="fitCost">—</div></div>
+        <div class="cost-row"><div class="cost-name" id="laborName">Ishchi kuchi</div><div class="cost-value" id="laborCost">—</div></div>
+        <div class="cost-row"><div class="cost-name">Yetkazish va o‘rnatish</div><div class="cost-value" id="serviceCost">—</div></div>
+        <div class="cost-row"><div class="cost-name" id="markupName">Korxona ustamasi</div><div class="cost-value" id="markupCost">—</div></div>
+        <div class="cost-row"><div class="cost-name" id="discountName">Chegirma</div><div class="cost-value negative" id="discountCost">—</div></div>
+        <div class="cost-row"><div class="cost-name" id="vatName">QQS</div><div class="cost-value" id="vatCost">—</div></div>
+      </div>
+      <div class="formula-box" id="formulaBox"></div>
+      <div class="action-grid">
+        <button class="primary-btn" id="orderBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Buyurtma so‘rovi</button>
+        <button class="secondary-btn" id="copyBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Nusxa</button>
+        <button class="secondary-btn" id="printBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Chop etish</button>
+      </div>
+      <div class="notice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg><div>Bu xomaki smeta. Yakuniy narx detal kroyi, material qalinligi, furnitura brendi, oyna, yoritish va ishlab chiqarish murakkabligidan keyin tasdiqlanadi.</div></div>
+    </section>
+  </aside>
+</main>
+
+<div class="bottom-bar"><div class="bottom-inner"><div class="bottom-total"><span>Jami taxminiy narx</span><strong id="bottomTotal">0 so‘m</strong></div><button class="bottom-cta" id="bottomOrder">Buyurtmaga o‘tish</button></div></div>
+
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <div class="modal-head"><div><div class="card-kicker">Buyurtma so‘rovi</div><h3>Hisobni mijozga yoki menejerga yuborish</h3></div><button class="close" data-close="orderModal">✕</button></div>
+    <div class="form-grid two">
+      <div class="field"><label for="projectName">Loyiha nomi</label><div class="input-wrap"><input class="text-field" id="projectName" type="text" value="Yangi mebel loyihasi"></div></div>
+      <div class="field"><label for="customerPhone">Telefon raqami</label><div class="input-wrap"><input class="text-field" id="customerPhone" type="tel" placeholder="+998 90 000 00 00"></div></div>
+    </div>
+    <div class="field-error" id="phoneError">Telefon raqami noto‘g‘ri. Format: +998 XX XXX XX XX</div>
+    <div class="summary-box" id="orderSummary"></div>
+    <div class="share-grid">
+      <button class="share-btn whatsapp" id="shareWhatsapp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>WhatsApp orqali</button>
+      <button class="share-btn telegram" id="shareTelegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 2 2 10l6 2 2 6 3-4 5 4z"/></svg>Telegram orqali</button>
+    </div>
+    <button class="primary-btn" id="modalCopy" style="width:100%">Hisobni nusxalash</button>
+    <button class="secondary-btn" id="modalExport" style="width:100%;margin-top:9px">JSON faylni yuklab olish</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="projectsModal">
+  <div class="modal">
+    <div class="modal-head"><div><div class="card-kicker">Saqlangan loyihalar</div><h3>Loyihalarim</h3></div><button class="close" data-close="projectsModal">✕</button></div>
+    <p>Har bir loyiha shu qurilmada, brauzer xotirasida saqlanadi. Yangi loyiha saqlash uchun tepadagi "Saqlash" tugmasini bosing.</p>
+    <div id="projectsList"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Saqlandi</div>
+
+<script>
+const TYPES = [
+  {id:'shkaf',name:'Shkaf',sub:'Kiyim uchun',defaults:{w:180,h:210,d:60,shelves:4,dividers:1,doors:3,drawers:0,fit:300000},fields:['shelves','dividers','doors','drawers'],icon:'<rect x="4" y="2" width="16" height="20" rx="1"/><path d="M12 2v20M9 12h.01M15 12h.01"/>'},
+  {id:'kitchen',name:'Oshxona',sub:'Kuxniy garnitur',defaults:{w:300,h:220,d:60,shelves:6,dividers:4,doors:8,drawers:3,fit:900000},fields:['shelves','dividers','doors','drawers'],icon:'<path d="M3 4h18v16H3zM3 11h18M9 4v16M15 4v16"/><path d="M5 7h2M11 7h2M17 7h2M5 15h2M11 15h2M17 15h2"/>'},
+  {id:'tv',name:'TV tumba',sub:'Mehmonxona',defaults:{w:180,h:55,d:42,shelves:1,dividers:2,doors:2,drawers:2,fit:250000},fields:['shelves','dividers','doors','drawers'],icon:'<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4M7 9h10"/>'},
+  {id:'komod',name:'Komod',sub:'Tortmali',defaults:{w:100,h:90,d:45,shelves:0,dividers:0,doors:0,drawers:4,fit:280000},fields:['drawers'],icon:'<rect x="5" y="2" width="14" height="20" rx="1"/><path d="M5 7h14M5 12h14M5 17h14M10 4.5h4M10 9.5h4M10 14.5h4M10 19.5h4"/>'},
+  {id:'stol',name:'Stol',sub:'Ish stoli',defaults:{w:140,h:75,d:70,shelves:0,dividers:0,doors:0,drawers:2,fit:180000},fields:['drawers'],icon:'<path d="M3 7h18v4H3zM6 11v10M18 11v10M10 11v6h5v-6"/>'},
+  {id:'karavot',name:'Karavot',sub:'Yotoqxona',defaults:{w:180,h:110,d:210,shelves:0,dividers:0,doors:0,drawers:0,fit:350000},fields:[],icon:'<path d="M3 12h18v7H3zM3 12V6h5v6M3 19v3M21 19v3"/>'},
+  {id:'shoe',name:'Poyabzal',sub:'Shkafcha',defaults:{w:90,h:120,d:35,shelves:4,dividers:0,doors:2,drawers:0,fit:220000},fields:['shelves','doors'],icon:'<rect x="5" y="2" width="14" height="20" rx="1"/><path d="M5 8h14M5 14h14M9 5h6M9 11h6M9 17h6"/>'},
+  {id:'pharmacy',name:'Apteka vitrina',sub:'Savdo mebeli',defaults:{w:240,h:220,d:45,shelves:5,dividers:2,doors:3,drawers:3,fit:700000},fields:['shelves','dividers','doors','drawers'],icon:'<rect x="4" y="2" width="16" height="20" rx="1"/><path d="M4 15h16M8 2v13M16 2v13M7 19h10M12 5v6M9 8h6"/>'}
+];
+
+const state={type:'shkaf',currentProjectId:null};
+const $=id=>document.getElementById(id);
+const calcIds=['w','h','d','shelves','dividers','doors','drawers','lmdefPrice','lmdefLen','lmdefWid','lmdefDecor','hdfPrice','hdfLen','hdfWid','edgePrice','edgeType','wastePct','laborPct','fittings','delivery','installation','markupPct','discountPct','vatPct','fullSheets','vatEnabled'];
+
+function typeById(id){return TYPES.find(t=>t.id===id)||TYPES[0]}
+function fmt(n){return Math.round(Number(n)||0).toLocaleString('ru-RU')}
+function num(id,fallback=0){
+  const el=$(id);if(!el)return fallback;
+  let v=Number(el.value);
+  if(!Number.isFinite(v))v=fallback;
+  if(el.hasAttribute('min')){const mn=Number(el.getAttribute('min'));if(Number.isFinite(mn)&&v<mn)v=mn}
+  if(el.hasAttribute('max')){const mx=Number(el.getAttribute('max'));if(Number.isFinite(mx)&&v>mx)v=mx}
+  return v;
+}
+function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+function buildTypes(){
+  $('typeGrid').innerHTML='';
+  TYPES.forEach(t=>{
+    const b=document.createElement('button');
+    b.type='button';b.className='type-btn'+(t.id===state.type?' active':'');b.dataset.id=t.id;
+    b.innerHTML=`<span class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">${t.icon}</svg></span><span>${t.name}</span><small>${t.sub}</small>`;
+    b.addEventListener('click',()=>selectType(t.id,true));
+    $('typeGrid').appendChild(b);
+  });
+}
+
+function selectType(id,applyDefaults=false){
+  state.type=id;const t=typeById(id);
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
+  if(applyDefaults){
+    Object.entries(t.defaults).forEach(([key,value])=>{if(key==='fit')$('fittings').value=value;else if($(key))$(key).value=value});
+  }
+  document.querySelectorAll('#structureFields [data-field]').forEach(el=>el.classList.toggle('hidden',!t.fields.includes(el.dataset.field)));
+  update();
+}
+
+function material(area,waste,lenCm,widCm,price,full){
+  if(area<=0||lenCm<=0||widCm<=0)return{cost:0,count:0,exact:0,gross:0,sheetArea:0};
+  const gross=area*(1+waste/100);const sheetArea=(lenCm/100)*(widCm/100);const exact=gross/sheetArea;const count=full?Math.ceil(exact):exact;
+  return{cost:count*price,count,exact,gross,sheetArea};
+}
+
+function calculateParts(){
+  const type=state.type,w=num('w')/100,h=num('h')/100,d=num('d')/100;
+  const shelves=Math.round(num('shelves')),dividers=Math.round(num('dividers')),doors=Math.round(num('doors')),drawers=Math.round(num('drawers'));
+  let panel=0,back=0,edge=0,note='';
+  if(type==='shkaf'){
+    panel=2*h*d+2*w*d+shelves*w*d+dividers*h*d+doors*(w/Math.max(doors,1))*h;
+    back=w*h;edge=2*h+2*w+shelves*w+dividers*h+doors*(2*h+2*w/Math.max(doors,1));
+    note=`${doors} ta eshik, ${shelves} ta polka va ${dividers} ta tik bo‘luvchi.`;
+  }else if(type==='kitchen'){
+    const lowerH=Math.min(.9,h*.42),upperH=Math.max(.6,h-lowerH-.55);
+    panel=4*w*d+2*(lowerH+upperH)*d+dividers*h*d+shelves*w*d+doors*(w/Math.max(doors,1))*(lowerH+upperH)*.95+drawers*(w/Math.max(drawers,1))*lowerH*.85;
+    back=w*(lowerH+upperH);edge=6*w+4*h+shelves*w+dividers*h+doors*(2*(lowerH+upperH)+2*w/Math.max(doors,1))+drawers*2*w/Math.max(drawers,1);
+    note=`Pastki va yuqori modul, ${doors} ta fasad, ${drawers} ta tortma.`;
+  }else if(type==='tv'){
+    panel=2*h*d+2*w*d+shelves*w*d+dividers*h*d+doors*(w/Math.max(doors,1))*h*.65+drawers*(w/Math.max(drawers,1))*h*.32;
+    back=w*h;edge=2*h+4*w+shelves*w+dividers*h+doors*(2*h*.65+2*w/Math.max(doors,1))+drawers*2*w/Math.max(drawers,1);
+    note=`TV tumba korpusi, ${doors} ta eshik va ${drawers} ta tortma.`;
+  }else if(type==='komod'){
+    panel=2*h*d+2*w*d+drawers*(2*d*(w/Math.max(drawers,1))+.82*w*h/Math.max(drawers,1));
+    back=w*h;edge=2*h+4*w+drawers*(2*w+2*h/Math.max(drawers,1));
+    note=`${drawers} ta tortmali komod korpusi.`;
+  }else if(type==='stol'){
+    panel=w*d+2*h*d+w*h*.28+drawers*(w*.35*d+w*.35*h*.35);
+    back=0;edge=2*(w+d)+4*h+2*d+drawers*(2*w*.35+2*h*.35);
+    note=`Stol usti, 2 yon tayanch va ${drawers} ta tortma.`;
+  }else if(type==='karavot'){
+    const side=.38;panel=w*h+2*d*side+2*w*side+w*d*.35;back=0;edge=2*(w+h)+4*d+4*w;
+    note=`Bosh qismi, yon tsargalar va tayanch elementlari.`;
+  }else if(type==='shoe'){
+    panel=2*h*d+2*w*d+shelves*w*d+doors*(w/Math.max(doors,1))*h;
+    back=w*h;edge=2*h+2*w+shelves*w+doors*(2*h+2*w/Math.max(doors,1));
+    note=`${doors} ta eshik va ${shelves} ta poyabzal polkasi.`;
+  }else if(type==='pharmacy'){
+    const bottom=.65;panel=2*h*d+3*w*d+dividers*h*d+drawers*w*bottom*.75/Math.max(drawers,1)+doors*w*(h-bottom)/Math.max(doors,1);
+    back=w*h;edge=4*h+5*w+dividers*h+drawers*2*w/Math.max(drawers,1)+doors*(2*(h-bottom)+2*w/Math.max(doors,1));
+    note=`Vitrina, ${shelves} ta oynali polka, ${drawers} ta pastki tortma.`;
+  }
+  return{panel,back,edge,note,w,h,d,shelves,dividers,doors,drawers};
+}
+
+function compute(){
+  const p=calculateParts();const waste=clamp(num('wastePct',10),0,50),full=$('fullSheets').checked;
+  const lm=material(p.panel,waste,num('lmdefLen'),num('lmdefWid'),num('lmdefPrice'),full);
+  const hd=material(p.back,waste,num('hdfLen'),num('hdfWid'),num('hdfPrice'),full);
+  const edgeM=p.edge*(1+waste/100),edgeCost=edgeM*num('edgePrice');
+  const fit=num('fittings'),laborPct=clamp(num('laborPct'),0,200),delivery=num('delivery'),installation=num('installation');
+  const materialBase=lm.cost+hd.cost+edgeCost;const labor=materialBase*laborPct/100;
+  const subtotal=materialBase+fit+labor+delivery+installation;
+  const markupPct=clamp(num('markupPct'),0,300),markup=subtotal*markupPct/100;
+  const beforeDiscount=subtotal+markup;const discountPct=clamp(num('discountPct'),0,100),discount=beforeDiscount*discountPct/100;
+  const afterDiscount=Math.max(0,beforeDiscount-discount);
+  const vatEnabled=$('vatEnabled').checked,vatPct=clamp(num('vatPct',12),0,100);
+  const vat=vatEnabled?afterDiscount*vatPct/100:0;
+  const total=afterDiscount+vat;
+  return{p,waste,full,lm,hd,edgeM,edgeCost,fit,laborPct,labor,delivery,installation,subtotal,markupPct,markup,discountPct,discount,afterDiscount,vatEnabled,vatPct,vat,total};
+}
+
+const canvas=$('draw'),ctx=canvas.getContext('2d');
+function resizeCanvas(){const r=canvas.getBoundingClientRect(),ratio=window.devicePixelRatio||1;canvas.width=Math.round(r.width*ratio);canvas.height=Math.round(r.height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);return r}
+function line(x1,y1,x2,y2,color='rgba(37,99,235,.82)',width=1.5){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke()}
+function rect(x,y,w,h,fill='rgba(59,130,246,.08)'){ctx.fillStyle=fill;ctx.fillRect(x,y,w,h);ctx.strokeStyle='rgba(37,99,235,.88)';ctx.lineWidth=1.5;ctx.strokeRect(x,y,w,h)}
+function dim(x1,y1,x2,y2,label,vertical=false){
+  ctx.strokeStyle='rgba(245,102,35,.72)';ctx.fillStyle='#bd4d12';ctx.lineWidth=1;ctx.font='10px Consolas';
+  line(x1,y1,x2,y2,'rgba(245,102,35,.65)',1);const tick=4;
+  if(vertical){line(x1-tick,y1,x1+tick,y1,'rgba(245,102,35,.65)',1);line(x2-tick,y2,x2+tick,y2,'rgba(245,102,35,.65)',1);ctx.save();ctx.translate(x1-8,(y1+y2)/2);ctx.rotate(-Math.PI/2);ctx.fillText(label,-ctx.measureText(label).width/2,-2);ctx.restore()}
+  else{line(x1,y1-tick,x1,y1+tick,'rgba(245,102,35,.65)',1);line(x2,y2-tick,x2,y2+tick,'rgba(245,102,35,.65)',1);ctx.fillText(label,(x1+x2)/2-ctx.measureText(label).width/2,y1-7)}
+}
+function render(){
+  const r=resizeCanvas(),W=r.width,H=r.height;ctx.clearRect(0,0,W,H);const p=calculateParts();
+  const padX=48,padY=42,availW=W-padX*2.1,availH=H-padY*1.7,scale=Math.min(availW/Math.max(p.w,.1),availH/Math.max(p.h,.1));
+  const dw=p.w*scale,dh=p.h*scale,ox=(W-dw)/2+8,oy=(H-dh)/2-2;
+  ctx.lineCap='round';ctx.lineJoin='round';
+  const type=state.type;
+  if(['shkaf','shoe','pharmacy','kitchen','tv','komod'].includes(type)){
+    rect(ox,oy,dw,dh);
+    if(type==='shkaf'||type==='shoe'){
+      const doors=Math.max(1,p.doors);for(let i=1;i<doors;i++)line(ox+dw*i/doors,oy,ox+dw*i/doors,oy+dh);
+      for(let i=0;i<doors;i++){const x=ox+dw*(i+.5)/doors;line(x-4,oy+dh*.48,x+4,oy+dh*.48,'#f2994a',2)}
+    }else if(type==='komod'){
+      const n=Math.max(1,p.drawers);for(let i=1;i<n;i++)line(ox,oy+dh*i/n,ox+dw,oy+dh*i/n);for(let i=0;i<n;i++)line(ox+dw*.44,oy+dh*(i+.5)/n,ox+dw*.56,oy+dh*(i+.5)/n,'#f2994a',2);
+    }else if(type==='tv'){
+      const split=dh*.56;line(ox,oy+split,ox+dw,oy+split);const sections=Math.max(2,p.dividers+1);for(let i=1;i<sections;i++)line(ox+dw*i/sections,oy,ox+dw*i/sections,oy+split);const drawers=Math.max(1,p.drawers);for(let i=1;i<drawers;i++)line(ox+dw*i/drawers,oy+split,ox+dw*i/drawers,oy+dh);
+    }else if(type==='kitchen'){
+      const gap=dh*.22,lower=dh*.42;line(ox,oy+lower,ox+dw,oy+lower);line(ox,oy+lower+gap,ox+dw,oy+lower+gap);const sections=Math.max(3,p.dividers+1);for(let i=1;i<sections;i++){line(ox+dw*i/sections,oy,ox+dw*i/sections,oy+lower);line(ox+dw*i/sections,oy+lower+gap,ox+dw*i/sections,oy+dh)}
+    }else if(type==='pharmacy'){
+      const base=dh*.32;line(ox,oy+dh-base,ox+dw,oy+dh-base);const sections=Math.max(2,p.dividers+1);for(let i=1;i<sections;i++)line(ox+dw*i/sections,oy,ox+dw*i/sections,oy+dh-base);const sh=Math.max(1,p.shelves);for(let i=1;i<=sh;i++)line(ox+4,oy+(dh-base)*i/(sh+1),ox+dw-4,oy+(dh-base)*i/(sh+1),'rgba(139,124,255,.65)',1);
+    }
+  }else if(type==='stol'){
+    const top=Math.max(8,dh*.08);rect(ox,oy,dw,top);rect(ox+dw*.06,oy+top,dw*.08,dh-top);rect(ox+dw*.86,oy+top,dw*.08,dh-top);if(p.drawers>0)rect(ox+dw*.58,oy+top,dw*.28,dh*.45);
+  }else if(type==='karavot'){
+    const head=dh*.44;rect(ox,oy,dw,head);rect(ox,oy+head+8,dw,dh-head-8);line(ox+dw*.07,oy+head+dh*.14,ox+dw*.93,oy+head+dh*.14,'rgba(139,124,255,.7)',1.4);
+  }
+  dim(ox,oy+dh+19,ox+dw,oy+dh+19,`${Math.round(p.w*100)} sm`);dim(ox-18,oy,ox-18,oy+dh,`${Math.round(p.h*100)} sm`,true);
+  ctx.fillStyle='rgba(63,82,124,.88)';ctx.font='9px Consolas';ctx.fillText(`CHUQURLIK: ${Math.round(p.d*100)} sm`,W-130,H-10);
+}
+
+function summaryText(c){
+  const t=typeById(state.type),project=$('projectName')?.value||'Mebel loyihasi',phone=$('customerPhone')?.value||'kiritilmagan';
+  const decor=$('lmdefDecor')?.value||'',edgeType=$('edgeType')?.value||'';
+  const vatLine=c.vatEnabled?`QQS (${c.vatPct}%): ${fmt(c.vat)} so‘m\n`:'';
+  return `${project}\nMebel turi: ${t.name}\nO‘lcham: ${Math.round(c.p.w*100)} × ${Math.round(c.p.h*100)} × ${Math.round(c.p.d*100)} sm\nDekor: ${decor} · Kromka: ${edgeType}\nLMDEF: ${c.full?Math.ceil(c.lm.count):c.lm.exact.toFixed(2)} list — ${fmt(c.lm.cost)} so‘m\nLXDEF: ${c.p.back>0?(c.full?Math.ceil(c.hd.count):c.hd.exact.toFixed(2)):'0'} list — ${fmt(c.hd.cost)} so‘m\nKromka: ${c.edgeM.toFixed(1)} metr — ${fmt(c.edgeCost)} so‘m\nFurnitura: ${fmt(c.fit)} so‘m\nIshchi kuchi: ${fmt(c.labor)} so‘m\nYetkazish va o‘rnatish: ${fmt(c.delivery+c.installation)} so‘m\nKorxona ustamasi: ${fmt(c.markup)} so‘m\nChegirma: -${fmt(c.discount)} so‘m\n${vatLine}JAMI: ${fmt(c.total)} so‘m\nTelefon: ${phone}\n\nEslatma: bu xomaki hisob, yakuniy narx o‘lchov va kroy tasdiqlangandan keyin belgilanadi.`;
+}
+
+function update(){
+  const c=compute(),t=typeById(state.type);render();
+  $('previewName').textContent=`${t.name} chizmasi`;$('previewDims').textContent=`${Math.round(c.p.w*100)} × ${Math.round(c.p.h*100)} × ${Math.round(c.p.d*100)} sm`;$('typeLabel').textContent=t.name;
+  $('totalAmount').innerHTML=`${fmt(c.total)} <small>so‘m</small>`;$('bottomTotal').textContent=`${fmt(c.total)} so‘m`;
+  $('metricSheets').textContent=c.full?Math.ceil(c.lm.count):c.lm.exact.toFixed(2);$('metricHdf').textContent=c.p.back>0?(c.full?Math.ceil(c.hd.count):c.hd.exact.toFixed(2)):'0';$('metricEdge').textContent=`${c.edgeM.toFixed(1)} m`;
+  $('lmdefCost').textContent=`${fmt(c.lm.cost)} so‘m`;$('hdfCost').textContent=`${fmt(c.hd.cost)} so‘m`;$('edgeCost').textContent=`${fmt(c.edgeCost)} so‘m`;$('fitCost').textContent=`${fmt(c.fit)} so‘m`;$('laborCost').textContent=`${fmt(c.labor)} so‘m`;$('serviceCost').textContent=`${fmt(c.delivery+c.installation)} so‘m`;$('markupCost').textContent=`${fmt(c.markup)} so‘m`;$('discountCost').textContent=`− ${fmt(c.discount)} so‘m`;
+  $('vatCost').textContent=c.vatEnabled?`${fmt(c.vat)} so‘m`:'o‘chirilgan';
+  $('laborName').textContent=`Ishchi kuchi (${c.laborPct}%)`;$('markupName').textContent=`Korxona ustamasi (${c.markupPct}%)`;$('discountName').textContent=`Chegirma (${c.discountPct}%)`;$('vatName').textContent=`QQS (${c.vatPct}%)`;
+  const listLabel=r=>c.full?`${Math.ceil(r.count)} list · ${r.gross.toFixed(2)} m²`:`${r.exact.toFixed(2)} list ulushi · ${r.gross.toFixed(2)} m²`;
+  $('lmdefMeta').textContent=listLabel(c.lm);$('hdfMeta').textContent=c.p.back>0?listLabel(c.hd):'bu turkumga kerak emas';$('edgeMeta').textContent=`${c.edgeM.toFixed(1)} metr`;
+  $('formulaBox').innerHTML=`<strong>Hisob izohi:</strong> ${c.p.note} Materiallarga ${c.waste}% chiqindi qo‘shildi. ${c.full?'Narx to‘liq list xaridi bo‘yicha yaxlitlandi.':'Narx sarflangan list ulushi bo‘yicha hisoblandi.'} ${c.vatEnabled?`QQS ${c.vatPct}% stavkasida qo‘shildi.`:'QQS qo‘shilmagan.'}`;
+  if($('orderSummary'))$('orderSummary').textContent=summaryText(c);
+}
+
+function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),1800)}
+
+function currentData(){
+  const data={type:state.type};
+  calcIds.forEach(id=>{const el=$(id);if(el)data[id]=el.type==='checkbox'?el.checked:el.value});
+  data.projectName=$('projectName')?.value||'';
+  data.customerPhone=$('customerPhone')?.value||'';
+  return data;
+}
+function getProjects(){try{return JSON.parse(localStorage.getItem('mebel360-projects')||'[]')}catch(e){return[]}}
+function setProjects(list){localStorage.setItem('mebel360-projects',JSON.stringify(list))}
+
+function save(){
+  const data=currentData();
+  const name=(data.projectName||'').trim()||'Nomsiz loyiha';
+  const list=getProjects();
+  const id=state.currentProjectId||('p'+Date.now());
+  state.currentProjectId=id;
+  const idx=list.findIndex(p=>p.id===id);
+  const entry={id,name,phone:data.customerPhone,type:data.type,savedAt:new Date().toISOString(),data};
+  if(idx>=0)list[idx]=entry;else list.unshift(entry);
+  setProjects(list);localStorage.setItem('mebel360-last',id);
+  toast('Loyiha saqlandi: '+name);renderProjectsList();
+}
+function loadProject(id){
+  const list=getProjects();const p=list.find(x=>x.id===id);if(!p)return;
+  state.type=p.data.type||'shkaf';state.currentProjectId=p.id;
+  calcIds.forEach(cid=>{if(p.data[cid]!==undefined){const el=$(cid);if(!el)return;if(el.type==='checkbox')el.checked=Boolean(p.data[cid]);else el.value=p.data[cid]}});
+  if($('projectName'))$('projectName').value=p.data.projectName||'';
+  if($('customerPhone'))$('customerPhone').value=p.data.customerPhone||'';
+  buildTypes();selectType(state.type,false);
+  localStorage.setItem('mebel360-last',id);
+  toast('Yuklandi: '+p.name);
+  $('projectsModal').classList.remove('open');
+}
+function deleteProject(id){let list=getProjects();list=list.filter(p=>p.id!==id);setProjects(list);if(state.currentProjectId===id)state.currentProjectId=null;renderProjectsList();toast('Loyiha o‘chirildi')}
+function renderProjectsList(){
+  const wrap=$('projectsList');if(!wrap)return;
+  const list=getProjects();
+  if(!list.length){wrap.innerHTML='<div class="empty-note">Hali saqlangan loyiha yo‘q.</div>';return}
+  wrap.innerHTML=list.map(p=>`<div class="project-row"><div class="project-info"><strong>${escapeHtml(p.name)}</strong><span>${new Date(p.savedAt).toLocaleString('ru-RU')} · ${typeById(p.type).name}</span></div><div class="project-actions"><button class="mini-btn" data-load="${p.id}">Ochish</button><button class="mini-btn danger" data-del="${p.id}">O‘chirish</button></div></div>`).join('');
+  wrap.querySelectorAll('[data-load]').forEach(b=>b.addEventListener('click',()=>loadProject(b.dataset.load)));
+  wrap.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{if(confirm('Loyihani o‘chirasizmi?'))deleteProject(b.dataset.del)}));
+}
+
+function resetAll(){
+  state.currentProjectId=null;state.type='shkaf';const t=typeById('shkaf');
+  Object.entries(t.defaults).forEach(([k,v])=>{if(k==='fit')$('fittings').value=v;else if($(k))$(k).value=v});
+  $('lmdefPrice').value=556600;$('lmdefLen').value=275;$('lmdefWid').value=183;$('lmdefDecor').value='Oq (standart)';
+  $('hdfPrice').value=150000;$('hdfLen').value=280;$('hdfWid').value=207;
+  $('edgePrice').value=8000;$('edgeType').value='2mm';$('wastePct').value=10;
+  $('laborPct').value=25;$('delivery').value=0;$('installation').value=0;$('markupPct').value=15;$('discountPct').value=0;
+  $('vatPct').value=12;$('vatEnabled').checked=false;$('fullSheets').checked=true;
+  if($('projectName'))$('projectName').value='Yangi mebel loyihasi';if($('customerPhone'))$('customerPhone').value='';
+  buildTypes();selectType('shkaf');toast('Boshlang‘ich holat tiklandi')
+}
+async function copySummary(){const text=summaryText(compute());try{await navigator.clipboard.writeText(text);toast('Hisob nusxalandi')}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Hisob nusxalandi')}}
+function openOrder(){update();checkPhone();$('orderModal').classList.add('open')}
+function openProjects(){renderProjectsList();$('projectsModal').classList.add('open')}
+
+function checkPhone(){
+  const el=$('customerPhone');if(!el)return true;
+  const v=el.value.trim();
+  if(!v){$('phoneError').classList.remove('show');el.classList.remove('invalid');return true}
+  const digits=v.replace(/[\s-]/g,'');
+  const ok=/^\+?998\d{9}$/.test(digits);
+  $('phoneError').classList.toggle('show',!ok);
+  el.classList.toggle('invalid',!ok);
+  return ok;
+}
+
+function shareWhatsapp(){
+  const text=summaryText(compute());
+  const digits=($('customerPhone').value||'').replace(/[^\d]/g,'');
+  const url=digits?`https://wa.me/${digits}?text=${encodeURIComponent(text)}`:`https://wa.me/?text=${encodeURIComponent(text)}`;
+  window.open(url,'_blank');
+}
+function shareTelegram(){
+  const text=summaryText(compute());
+  window.open(`https://t.me/share/url?url=&text=${encodeURIComponent(text)}`,'_blank');
+}
+function exportJSON(){
+  const c=compute();
+  const payload={
+    project:$('projectName')?.value||'',phone:$('customerPhone')?.value||'',type:state.type,
+    decor:$('lmdefDecor')?.value||'',edgeType:$('edgeType')?.value||'',
+    dimensions:{width_cm:Math.round(c.p.w*100),height_cm:Math.round(c.p.h*100),depth_cm:Math.round(c.p.d*100)},
+    materials:{lmdef:{sheets:c.full?Math.ceil(c.lm.count):Number(c.lm.exact.toFixed(2)),cost:Math.round(c.lm.cost)},hdf:{sheets:c.p.back>0?(c.full?Math.ceil(c.hd.count):Number(c.hd.exact.toFixed(2))):0,cost:Math.round(c.hd.cost)},edge:{meters:Number(c.edgeM.toFixed(1)),cost:Math.round(c.edgeCost)}},
+    costs:{fittings:Math.round(c.fit),labor:Math.round(c.labor),delivery:Math.round(c.delivery),installation:Math.round(c.installation),markup:Math.round(c.markup),discount:Math.round(c.discount),vat:Math.round(c.vat),total:Math.round(c.total)},
+    generatedAt:new Date().toISOString()
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download=`${(payload.project||'mebel360-hisob').replace(/\s+/g,'_')}.json`;a.click();
+  URL.revokeObjectURL(url);toast('JSON fayl yuklandi');
+}
+
+buildTypes();
+(function initLast(){
+  const lastId=localStorage.getItem('mebel360-last');
+  if(lastId&&getProjects().some(p=>p.id===lastId)){loadProject(lastId)}else{selectType(state.type,false)}
+})();
+calcIds.forEach(id=>{const el=$(id);if(el)el.addEventListener(el.type==='checkbox'?'change':'input',update)});
+window.addEventListener('resize',render);
+$('saveBtn').addEventListener('click',save);
+$('resetBtn').addEventListener('click',resetAll);
+$('copyBtn').addEventListener('click',copySummary);
+$('modalCopy').addEventListener('click',copySummary);
+$('modalExport').addEventListener('click',exportJSON);
+$('printBtn').addEventListener('click',()=>window.print());
+$('orderBtn').addEventListener('click',openOrder);
+$('bottomOrder').addEventListener('click',openOrder);
+$('projectsBtn').addEventListener('click',openProjects);
+$('shareWhatsapp').addEventListener('click',()=>{if(checkPhone()||!$('customerPhone').value.trim())shareWhatsapp();});
+$('shareTelegram').addEventListener('click',shareTelegram);
+$('projectName').addEventListener('input',update);
+$('customerPhone').addEventListener('input',()=>{checkPhone();update()});
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.close).classList.remove('open')));
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+update();
+</script>
+</body>
+</html>

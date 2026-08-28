@@ -1,0 +1,9 @@
+GITHUB UCHUN TAYYOR
+
+1) GitHub'da yangi repo: Mebel360-Hisobchi
+2) Shu papka ICHIDAGI barcha fayl va papkalarni repo'ga yuklang.
+3) Izoh/commit: Mebel360 Hisobchi GitHub Pages versiyasi
+4) Settings > Pages > Deploy from a branch
+5) main va /(root) ni tanlang > Save
+
+MUHIM: tashqi katta papkani emas, shu papkaning ICHIDAGI index.html, assets, versions va boshqa fayllarni repo ildiziga yuklang.
