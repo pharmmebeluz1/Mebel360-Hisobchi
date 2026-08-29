@@ -1662,12 +1662,8 @@
                 <label data-unit="none">Ichki bo‘lim hisoblash usuli</label>
                 <select id="sectionCalcMode">
                   <option value="equal" selected>Teng hisoblash — barcha bo‘limlar bir xil</option>
-                  <option value="custom">Erkin hisoblash — bo‘lim enlarini o‘zim kiritaman</option>
+                  <option value="custom">Erkin hisoblash — har bir bo‘limni o‘zim kiritaman</option>
                 </select>
-              </div>
-              <div id="equalSectionResultWrap" class="full no-unit">
-                <label data-unit="none">⚖ Teng bo‘linish natijasi</label>
-                <div id="equalSectionResult" class="mini-info ok">1900 − 32 = 1868 · 1868 − 32 = 1836 · 1836 ÷ 3 = 612 mm</div>
               </div>
               <div id="customSectionsWrap" class="full hidden no-unit">
                 <label data-unit="none">Erkin bo‘lim o‘lchamlari</label>
@@ -2590,32 +2586,6 @@
   }
   function money(v){ return Math.round(v).toLocaleString("ru-RU")+" so‘m"; }
 
-  function updateEqualSectionResult(){
-    const wrap=document.getElementById("equalSectionResultWrap");
-    const out=document.getElementById("equalSectionResult");
-    if(!wrap||!out) return;
-    const kitchen=document.getElementById("productType")?.value==="kitchen";
-    const layout=document.getElementById("layoutType")?.value||"allShelves";
-    const mode=document.getElementById("sectionCalcMode")?.value||"equal";
-    const supported=layout==="wardrobe"||layout==="allShelves";
-    const show=!kitchen&&supported&&mode==="equal";
-    wrap.classList.toggle("hidden",!show);
-    if(!show) return;
-    const W=n("w"),T=n("t");
-    const count=layout==="wardrobe"?3:Math.max(1,Math.floor(n("sections")||1));
-    const sideTotal=2*T;
-    const innerAfterSides=Math.max(0,W-sideTotal);
-    const stCount=Math.max(0,count-1);
-    const stTotal=stCount*T;
-    const clear=Math.max(0,innerAfterSides-stTotal);
-    const each=count?clear/count:0;
-    const sequence=Array.from({length:count},(_,i)=>`${fmt(each)}${i<count-1?` | ${fmt(T)} | `:""}`).join("");
-    out.className="mini-info "+(clear>0?"ok":"warn");
-    out.innerHTML=clear>0
-      ? `<b>${fmt(W)} − ${fmt(sideTotal)} = ${fmt(innerAfterSides)}</b> · ${fmt(innerAfterSides)} − ${fmt(stTotal)} = <b>${fmt(clear)}</b> · ${fmt(clear)} ÷ ${count} = <b>${fmt(each)} mm</b><br><span style="font-family:Consolas,monospace;font-weight:900">${sequence}</span> · ST baka: <b>${stCount} dona</b>`
-      : `O‘lcham yetarli emas. Shkaf eni, material qalinligi yoki bo‘lim sonini tekshiring.`;
-  }
-
   function getKitchenModuleWidths(totalWidth, preferredWidth){
     const total=Math.max(1,Number(totalWidth)||1);
     const preferred=Math.max(300,Number(preferredWidth)||800);
@@ -2841,16 +2811,14 @@
     const custom = wardrobe || leftShelves || rightShelves;
 
     const kitchen = document.getElementById("productType").value === "kitchen";
-    const sectionMode=document.getElementById("sectionCalcMode")?.value||"equal";
-    const wardrobeEqual=wardrobe&&sectionMode==="equal";
-    const freeSectionMode = !custom && !outerHangingCenterShelves && !kitchen && sectionMode === "custom";
+    const freeSectionMode = !custom && !outerHangingCenterShelves && !kitchen && (document.getElementById("sectionCalcMode")?.value === "custom");
     document.getElementById("step3")?.classList.toggle("hidden", kitchen);
     document.getElementById("sectionsWrap").classList.toggle("hidden", custom || outerHangingCenterShelves || kitchen);
     document.getElementById("shelvesWrap").classList.toggle("hidden", custom || outerHangingCenterShelves || kitchen);
-    document.getElementById("sectionCalcModeWrap")?.classList.toggle("hidden", (custom&&!wardrobe) || outerHangingCenterShelves || kitchen);
+    document.getElementById("sectionCalcModeWrap")?.classList.toggle("hidden", custom || outerHangingCenterShelves || kitchen);
     document.getElementById("customSectionsWrap")?.classList.toggle("hidden", !freeSectionMode);
-    document.getElementById("leftSectionWWrap").classList.toggle("hidden", !((wardrobe&&!wardrobeEqual) || leftShelves || outerHangingCenterShelves));
-    document.getElementById("rightSectionWWrap").classList.toggle("hidden", !((wardrobe&&!wardrobeEqual) || rightShelves || outerHangingCenterShelves));
+    document.getElementById("leftSectionWWrap").classList.toggle("hidden", !(wardrobe || leftShelves || outerHangingCenterShelves));
+    document.getElementById("rightSectionWWrap").classList.toggle("hidden", !(wardrobe || rightShelves || outerHangingCenterShelves));
     document.getElementById("leftShelvesWrap").classList.toggle("hidden", !(wardrobe || leftShelves));
     document.getElementById("rightShelvesWrap").classList.toggle("hidden", !(wardrobe || rightShelves));
     document.getElementById("centerShelvesWrap")?.classList.toggle("hidden", !outerHangingCenterShelves);
@@ -2862,9 +2830,7 @@
     if(outerHangingCenterShelves) document.getElementById("sectionCalcMode").value="custom";
 
     const helper = {
-      wardrobe:wardrobeEqual
-        ? "Teng hisoblash yoqildi: 2 ta chet baka va 2 ta ST baka ayiriladi, qolgan foydali eni 3 bo‘limga teng taqsimlanadi."
-        : "Erkin hisoblash yoqildi: chap va o‘ng bo‘lim enini o‘zingiz kiritasiz, o‘rta vishilka bo‘limi qolgan en bo‘yicha avtomatik hisoblanadi.",
+      wardrobe:"Mebel korpusi 3 bo‘limga bo‘linadi: chap va o‘ng tomonda tokchalar, o‘rtada shapka polka va kiyim osish uchun vishilka bo‘ladi. O‘rta bo‘lim eni avtomatik hisoblanadi.",
       outerHangingCenterShelves:"Mebel korpusi 3 bo‘limga bo‘linadi: chap va o‘ng tomonda shapka polka hamda vishilka, o‘rta bo‘limda tokchalar bo‘ladi. O‘rta bo‘lim eni avtomatik hisoblanadi.",
       leftShelves:"Mebel korpusi 2 bo‘limga bo‘linadi: chap tomonda tokchalar, o‘ng tomonda shapka polka va kiyim osish uchun vishilka bo‘ladi. O‘ng bo‘lim eni avtomatik hisoblanadi.",
       rightShelves:"Mebel korpusi 2 bo‘limga bo‘linadi: o‘ng tomonda tokchalar, chap tomonda shapka polka va kiyim osish uchun vishilka bo‘ladi. Chap bo‘lim eni avtomatik hisoblanadi.",
@@ -2877,7 +2843,6 @@
       : helper;
     rebuildCustomSectionInputs();
     updateCustomSectionStatus();
-    updateEqualSectionResult();
     calculate();
     if(typeof window.applyM360Language==='function') setTimeout(window.applyM360Language,0);
   }
@@ -4200,7 +4165,6 @@
     const kitchenModuleWidths=kitchenMode?kitchenLowerModules.map(m=>m.width):[];
     const layoutType=document.getElementById("layoutType").value;
     const wardrobeMode=layoutType==="wardrobe";
-    const wardrobeEqualMode=wardrobeMode&&((document.getElementById("sectionCalcMode")?.value||"equal")==="equal");
     const outerHangingCenterShelvesMode=layoutType==="outerHangingCenterShelves";
     const leftShelvesMode=layoutType==="leftShelves";
     const rightShelvesMode=layoutType==="rightShelves";
@@ -4268,22 +4232,17 @@
       sectionWidths=kitchenModuleWidths.map(v=>Math.max(0,v-2*T));
       shelfCounts=Array(sections).fill(shelves);
     }else if(wardrobeMode){
-      if(wardrobeEqualMode){
-        const equalW=sections?clearWidth/sections:0;
-        sectionWidths=Array(sections).fill(equalW);
-      }else{
-        let leftW=Math.max(200,n("leftSectionW"));
-        let rightW=Math.max(200,n("rightSectionW"));
-        const minCenter=Math.min(400,Math.max(220,clearWidth*.28));
-        const sideLimit=Math.max(0,clearWidth-minCenter);
-        if(leftW+rightW>sideLimit&&leftW+rightW>0){
-          const ratio=sideLimit/(leftW+rightW);
-          leftW*=ratio;
-          rightW*=ratio;
-        }
-        const centerW=Math.max(0,clearWidth-leftW-rightW);
-        sectionWidths=[leftW,centerW,rightW];
+      let leftW=Math.max(200,n("leftSectionW"));
+      let rightW=Math.max(200,n("rightSectionW"));
+      const minCenter=Math.min(400,Math.max(220,clearWidth*.28));
+      const sideLimit=Math.max(0,clearWidth-minCenter);
+      if(leftW+rightW>sideLimit&&leftW+rightW>0){
+        const ratio=sideLimit/(leftW+rightW);
+        leftW*=ratio;
+        rightW*=ratio;
       }
+      const centerW=Math.max(0,clearWidth-leftW-rightW);
+      sectionWidths=[leftW,centerW,rightW];
       shelfCounts=[Math.floor(n("leftShelves")),0,Math.floor(n("rightShelves"))];
       leftShelfIndex=0;
       hangingIndex=1;
@@ -4331,7 +4290,6 @@
       shelfCounts=Array(sections).fill(shelves);
     }
 
-    updateEqualSectionResult();
     const cellW=sectionWidths[0]||0;
     const shelfWidths=sectionWidths.map(v=>Math.max(0,v-shelfGapW));
     const shelfW=shelfWidths[0]||0;
@@ -4697,8 +4655,7 @@
         `${drawers>0?`<b>Tortma ichki yon:</b> ${fmt(D)} − 50 = <b>${fmt(drawerBodyD)} × ${fmt(drawerSideH)} mm</b> — ${drawers*2} ta.<br>`:""}`+
         `<b>LMDF kroy:</b> minimum ${boardPack.areaMinimum} list, haqiqiy joylashuvda <b>${boardSheets} list</b>`
       : displayCustomSectionsMode
-      ? `${wardrobeEqualMode?`<b>Teng bo‘linish:</b> ${fmt(W)} − ${fmt(2*T)} = ${fmt(W-2*T)}; ${fmt(W-2*T)} − ${fmt((sections-1)*T)} = ${fmt(clearWidth)}; ${fmt(clearWidth)} ÷ ${sections} = <b>${fmt(cellW)} mm</b><br>`:""}`+
-        `<b>Ichki bo‘limlar:</b> ${sectionWidths.map(v=>fmt(v)).join(" + ")} = <b>${fmt(clearWidth)} mm</b><br>`+
+      ? `<b>Ichki bo‘limlar:</b> ${sectionWidths.map(v=>fmt(v)).join(" + ")} = <b>${fmt(clearWidth)} mm</b><br>`+
         `<b>ST baka:</b> ${H} − ${topT} − ${baseH} − ${bottomT} = <b>${fmt(stBakaH)} mm</b><br>`+
         `${shelfSpacingParts.length?`<b>Tokcha oralig‘i:</b> ${shelfSpacingParts.join(" · ")}<br>`:""}`+
         `<b>${hangingLabel} shapka polka:</b> tepadan ${fmt(hatSpaceH)} mm · <b>Vishilka:</b> polkadan ${fmt(rodDrop)} mm pastda<br>`+
@@ -4717,7 +4674,7 @@
     document.getElementById("productQtyOut").textContent=productQty+" dona";
     document.getElementById("drawingTitle").textContent=`${productLabel} chizmasi · ${productQty} dona`;
     document.getElementById("baseTypeOut").textContent=baseLabel;
-    document.getElementById("cellWOut").textContent=kitchenMode?`Past ${sections} ta · Tepa ${kitchenUpperModules.length} ta`:wardrobeEqualMode?`${sections} × ${fmt(cellW)} mm`:displayCustomSectionsMode?sectionText+" mm":mm(cellW);
+    document.getElementById("cellWOut").textContent=kitchenMode?`Past ${sections} ta · Tepa ${kitchenUpperModules.length} ta`:displayCustomSectionsMode?sectionText+" mm":mm(cellW);
     document.getElementById("stBakaOut").textContent=kitchenMode?`Past ${fmt(H)} · Tepa ${fmt(kitchenConfig.upperH)} mm`:mm(stBakaH);
     document.getElementById("shelfSpaceOut").textContent=kitchenMode?`Past ${shelves} · Tepa ${kitchenConfig.upperShelves} tokcha`:displayCustomSectionsMode?(shelfSpacingParts.join(" / ")||`${shelves} ta tokcha / bo‘lim`):mm(shelfSpaceH);
     document.getElementById("shelfWOut").textContent=kitchenMode?`${kitchenDeviceText}`:displayCustomSectionsMode?sectionText+" mm":mm(shelfW);
@@ -4849,7 +4806,7 @@
         ["2-bosqich",`${fmt(afterTop)} − ${baseH} − ${bottomT}`,stBakaH,"Ichki balandlik"]
       ];
       if(wardrobeMode){
-        verticalRows.push(["3-bosqich",wardrobeEqualMode?`(${fmt(W)} − 2×${fmt(T)} − ${sections-1}×${fmt(T)}) ÷ ${sections}`:`${fmt(clearWidth)} − ${fmt(sectionWidths[leftShelfIndex])} − ${fmt(sectionWidths[rightShelfIndex])}`,sectionWidths[hangingIndex],wardrobeEqualMode?"3 ta teng bo‘lim eni":"O‘rta vishilka bo‘limi eni"]);
+        verticalRows.push(["3-bosqich",`${fmt(clearWidth)} − ${fmt(sectionWidths[leftShelfIndex])} − ${fmt(sectionWidths[rightShelfIndex])}`,sectionWidths[hangingIndex],"O‘rta vishilka bo‘limi eni"]);
       }else if(leftShelvesMode){
         verticalRows.push(["3-bosqich",`${fmt(clearWidth)} − ${fmt(sectionWidths[leftShelfIndex])}`,sectionWidths[hangingIndex],"O‘ng vishilka bo‘limi eni"]);
       }else{

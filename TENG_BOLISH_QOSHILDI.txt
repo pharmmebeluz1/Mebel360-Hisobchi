@@ -1,0 +1,11 @@
+Mebel360 Hisobchi — Teng bo‘lish funksiyasi qo‘shildi (2026-08-29)
+
+Shkaf uchun “Ichki bo‘lim hisoblash usuli” endi Teng / Erkin tanlovini ko‘rsatadi.
+Teng rejim misoli:
+1900 - 32 = 1868
+1868 - 32 = 1836
+1836 / 3 = 612 mm
+Natija: 612 | 16 | 612 | 16 | 612
+
+Teng rejim chizma, detal o‘lchamlari, kroy va narx hisobiga qo‘llanadi.
+Erkin rejimda chap/o‘ng bo‘lim enlarini qo‘lda kiritish avvalgidek ishlaydi.
