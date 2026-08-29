@@ -1376,22 +1376,6 @@
     }
 
 </style>
-<style id="m360-clean-ui">
-/* ===== Mebel360 CLEAN asosiy interfeys ===== */
-.technical-details .tab[data-tab="drilling"]{display:none!important}
-.ai-fab,.calc-fab{display:none!important}
-.ai-header-link,.server-header-link{display:none!important}
-.m360-clean-tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:16px}
-.m360-clean-tools-grid button{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-height:86px;padding:15px;border:1px solid rgba(47,83,151,.16);border-radius:15px;background:#fff;color:#182744;cursor:pointer;text-align:left;box-shadow:0 8px 22px rgba(57,84,135,.07)}
-.m360-clean-tools-grid button:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(57,84,135,.11)}
-.m360-clean-tools-grid button b{font-size:12px}
-.m360-clean-tools-grid button span{font-size:10px;color:#6d7b97;line-height:1.45}
-.m360-clean-bridge-slot{margin-top:8px;padding-top:16px;border-top:1px dashed rgba(47,83,151,.18)}
-.m360-clean-slot-title{display:flex;flex-direction:column;gap:3px;margin-bottom:10px}
-.m360-clean-slot-title b{font-size:13px;color:#182744}.m360-clean-slot-title span{font-size:10px;color:#6d7b97}
-.m360-clean-bridge-slot .twodplace-bridge{margin:0!important}
-@media(max-width:700px){.m360-clean-tools-grid{grid-template-columns:1fr}}
-</style>
 </head>
 <body class="customer-mode mebel360-app">
 <div class="m360-brand-splash" id="m360BrandSplash" aria-label="Mebel360 Hisobchi kirish oynasi">
@@ -1454,12 +1438,12 @@
     </div>
     <nav class="app-header-nav" aria-label="Asosiy menyu">
       <button type="button" class="header-link" onclick="openM360Pro('projects')"><span>▣</span>Loyihalar</button>
-      <button type="button" class="header-link pro-center-link" onclick="openM360Pro('builder')"><span>◆</span>Professional / Qo‘shimcha</button>
+      <button type="button" class="header-link pro-center-link" onclick="openM360Pro('builder')"><span>◆</span>Pro markaz</button>
       <button type="button" class="header-link" onclick="window.location.href='/pro-konstruktor'"><span>▤</span>Pro Konstruktor</button>
       <button type="button" class="header-link" onclick="window.location.href='/studio-3d'"><span>◈</span>Studio 3D</button>
       <button type="button" class="header-link" onclick="document.getElementById('previewArea')?.scrollIntoView()"><span>↶</span>Natijalar</button>
       <button type="button" class="header-link ai-header-link" onclick="openMebelAI()"><span>✦</span>AI yordamchi</button>
-      <button type="button" class="header-link server-header-link" onclick="openM360ServerPanel()"><span>☁</span>Server / ERP</button>
+      <button type="button" class="header-link" onclick="openM360ServerPanel()"><span>☁</span>Server / ERP</button>
       <div class="lang-switch" aria-label="Til tanlash">
         <button type="button" class="lang-btn active" data-lang="uz" onclick="setM360Language('uz')">UZ</button>
         <button type="button" class="lang-btn" data-lang="ru" onclick="setM360Language('ru')">RU</button>
@@ -2279,7 +2263,7 @@
   <div class="m360-pro-backdrop" onclick="closeM360Pro()"></div>
   <section class="m360-pro-window" role="dialog" aria-modal="true" aria-labelledby="m360ProTitle">
     <header class="m360-pro-head">
-      <div><b id="m360ProTitle">Mebel360° Professional / Qo‘shimcha</b><small>Asosiy hisobni soddalashtirish uchun kam ishlatiladigan kuchli funksiyalar shu yerga jamlandi</small></div>
+      <div><b id="m360ProTitle">Mebel360° Professional markaz</b><small>Loyiha, ichki konstruktor, katalog, qoldiq, QR etiketka va ishlab chiqarish paketi</small></div>
       <button type="button" onclick="closeM360Pro()" aria-label="Yopish">×</button>
     </header>
     <nav class="m360-pro-tabs">
@@ -2290,7 +2274,6 @@
       <button type="button" data-protab="offcuts" onclick="switchM360ProTab('offcuts')">📦 Qoldiq ombori</button>
       <button type="button" data-protab="labels" onclick="switchM360ProTab('labels')">🏷️ QR etiketka</button>
       <button type="button" data-protab="package" onclick="switchM360ProTab('package')">🗂️ Ishlab chiqarish paketi</button>
-      <button type="button" data-protab="tools" onclick="switchM360ProTab('tools')">⚙ Qo‘shimcha</button>
     </nav>
     <div class="m360-pro-content">
       <section class="m360-pro-panel" data-propanel="projects">
@@ -2347,19 +2330,6 @@
           <button onclick="openMebelAI();closeM360Pro()"><b>✦ AI yordamchi</b><span>Oddiy gap bilan loyiha va hisobni boshqarish</span></button>
         </div>
         <div class="integration-status" id="m360IntegrationStatus">Hali loyiha ishlab chiqarish navbatiga yuborilmagan.</div>
-      </section>
-
-      <section class="m360-pro-panel" data-propanel="tools">
-        <div class="pro-panel-head"><div><h3>Qo‘shimcha asboblar</h3><p>Asosiy oynani toza saqlash uchun 2D-PLACE, teshik xaritasi, AI, kalkulyator va server boshqaruvi shu yerga jamlandi.</p></div></div>
-        <div class="m360-clean-tools-grid">
-          <button type="button" onclick="openM360AdvancedDrilling()"><b>🔩 Teshik xaritasi</b><span>Petla, tokcha, konfirmat va mexanizm teshik razmerlari</span></button>
-          <button type="button" onclick="openMebelAI();closeM360Pro()"><b>✦ AI yordamchi</b><span>Hisob va konstruktor bo‘yicha aqlli yordamchi</span></button>
-          <button type="button" onclick="openStandaloneCalculator();closeM360Pro()"><b>▦ Kalkulyator</b><span>Oddiy hisob, razmer va narx kalkulyatori</span></button>
-          <button type="button" onclick="openM360ServerPanel();closeM360Pro()"><b>☁ Server / ERP</b><span>Lokal server va ERP ulanish boshqaruvi</span></button>
-        </div>
-        <div class="m360-clean-bridge-slot" id="m360TwoDPlaceSlot">
-          <div class="m360-clean-slot-title"><b>↔ 2D-PLACE ko‘prigi</b><span>Kroy ma’lumotini 2D-PLACE uchun TXT ko‘rinishida tayyorlash</span></div>
-        </div>
       </section>
     </div>
   </section>
@@ -7978,21 +7948,5 @@ body.mebel360-app.m360-clean-white .ai-fab{background:linear-gradient(135deg,var
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initClean); else initClean();
 })();
 </script>
-<script id="m360-clean-ui-script">
-(function(){
-  function moveAdvancedTools(){
-    const bridge=document.getElementById('twoDPlaceBridge');
-    const slot=document.getElementById('m360TwoDPlaceSlot');
-    if(bridge&&slot&&bridge.parentElement!==slot) slot.appendChild(bridge);
-  }
-  window.openM360AdvancedDrilling=function(){
-    if(typeof closeM360Pro==='function') closeM360Pro();
-    if(typeof openDrilling==='function') openDrilling();
-  };
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',moveAdvancedTools);
-  else moveAdvancedTools();
-})();
-</script>
-
 </body>
 </html>

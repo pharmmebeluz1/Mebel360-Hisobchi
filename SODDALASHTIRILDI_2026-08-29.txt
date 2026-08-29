@@ -1,0 +1,13 @@
+Mebel360 Hisobchi — asosiy interfeys soddalashtirildi
+
+Qilingan ishlar:
+1. Asosiy oynadagi kam ishlatiladigan funksiyalar Professional / Qo‘shimcha bo‘limiga jamlandi.
+2. 2D-PLACE ko‘prigi asosiy Kroy panelidan Professional / Qo‘shimcha ichiga ko‘chirildi.
+3. Teshik razmerlari asosiy tabdan yashirildi; Professional / Qo‘shimcha orqali ochiladi.
+4. Pastdagi Mebel360 AI va Kalkulyator suzuvchi tugmalari yashirildi; funksiyalar o‘chirilmagan, Professional / Qo‘shimcha orqali ochiladi.
+5. Server / ERP va AI header tugmalari ham asosiy oynadan yashirildi, Professional / Qo‘shimcha ichidan ochiladi.
+6. Qoldiq ombori, QR etiketka va Ishlab chiqarish paketi Professional markazda saqlanib qoldi.
+7. Hech bir funksiya o‘chirilmadi — faqat interfeys tozalandi.
+8. Service Worker cache versiyasi yangilandi, eski interfeys keshda qolib ketmasligi uchun.
+
+Asosiy oynada e'tibor: Chizma → Detallar → Kroy → Material/Furnitura → Xarajat/Yakuniy narx.
